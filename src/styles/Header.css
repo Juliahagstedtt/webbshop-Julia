@@ -1,0 +1,36 @@
+.header-meny {
+    background-color: rgb(255, 255, 255);
+    padding: 20px;
+    width: 100%;
+    border-bottom: 3px solid rgb(255, 37, 146);
+}
+
+.header-meny nav {
+    max-width: 1800px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+.logo {
+    background: transparent;
+}
+
+.logo, .cart {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}  
+
+button img {
+    display: block;
+    height: 40px;
+    transition: opacity 0.2s;
+}
+
+button img:hover {
+    opacity: 0.7;
+    border-radius: 20px;
+}
