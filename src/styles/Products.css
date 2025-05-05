@@ -1,0 +1,12 @@
+.products-container {
+    background-color: light pink;
+}
+
+.shop-icon {
+    border: none;
+    background: none;
+}
+
+.shop-icon:hover {
+    background-color: rgb(248, 206, 214);
+}
