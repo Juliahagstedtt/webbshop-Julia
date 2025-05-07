@@ -1,18 +1,88 @@
-import { Link } from "react-router";
 import '../styles/LoggIn.css';
+import { useNavigate, Link } from 'react-router-dom';
+import Joi from 'joi';
+
+import { useState } from 'react';
 
 function LoggIn() {
-    return(
-        <>
-        <div>
-            <main>
 
-            <h1>Logga In!</h1>
-             </main>
-        
-        </div>
-        </>
-    );
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [isValid, setIsValid] = useState(null);
+
+  const correctPassword = 'Barbie';
+  const navigate = useNavigate();
+
+
+  const schema = Joi.object({
+    password: Joi.string().min(4).required(),
+  });
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    const { error: joiError } = schema.validate({ password });
+
+    if (joiError) {
+      setError('Minst 4 tecken');
+      setIsValid(false);
+      return;
+    }
+
+    if (password !== correctPassword) {
+      setError('Fel lösenord');
+      setIsValid(false);
+      return;
+    }
+
+    // Login success
+    setError('');
+    setIsValid(true);
+    login();
+
+    navigate('/pages/admin'); 
+  };
+
+  return (
+<section className="loggIn dark-theme">
+    <section className='blurp'>
+      <div className='sign-section'>
+        <section className='form'>
+          <p className='admin'>Användarnamn</p>
+          <input
+            className={`input-box ${isValid === true ? 'input-success' : isValid === false ? 'input-error' : ''}`}
+            type="Name"
+            placeholder="Användarnamn"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleSubmit(e);
+            }}
+          />
+          {error && <p className="error-inlogg">{error}</p>}
+
+          <p className='admin'>Lösenord</p>
+          <input
+            className={`input-box ${isValid === true ? 'input-success' : isValid === false ? 'input-error' : ''}`}
+            type="password"
+            placeholder="Lösenord"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter') handleSubmit(e);
+            }}
+          />
+          {error && <p className="error-inlogg">{error}</p>}
+
+          <form onSubmit={handleSubmit}>
+             <button className="continue">Logga In</button>
+          </form>
+        </section>
+      </div>
+    </section>
+</section>
+  );
 }
+
 
 export default LoggIn;

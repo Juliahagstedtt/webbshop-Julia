@@ -4,17 +4,25 @@ import { Link } from 'react-router';
 function Cart() {
     return(
         <>
-        <div>
-            <h1>Cart sidan</h1>
+        <div className='cart-section'>
             <section>
-                <div className="cart-box">
-                    <h3>Produkt:</h3>
+        
+        <div className='cart-items'>
+            <p>Barbiedocka......79kr</p>
+            <button className='increase'>+</button>
+            <button className='decrease'>-</button>
 
-                <Link to={"/Products"}>
+        </div>
+
+
+                <div className="cart-box">
+                    <h3 className='total'>Totalt:</h3>
+                </div>
+
+                <Link to={"/"}>
                     <button className="continue">Fortsätt</button>
                 </Link>
 
-                </div>
             </section>
         </div>
         </>

@@ -1,8 +1,8 @@
 .header-meny {
-    background-color: rgb(255, 255, 255);
+    background-color: rgb(0, 0, 0);
     padding: 20px;
     width: 100%;
-    border-bottom: 3px solid rgb(255, 37, 146);
+    border-bottom: 3px solid #FF3499;
 }
 
 .header-meny nav {
