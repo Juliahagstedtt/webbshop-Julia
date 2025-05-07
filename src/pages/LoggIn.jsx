@@ -24,7 +24,7 @@ function LoggIn() {
     const { error: joiError } = schema.validate({ password });
 
     if (joiError) {
-      setError('Minst 4 tecken');
+      setError('Minst 6 tecken');
       setIsValid(false);
       return;
     }
@@ -45,7 +45,7 @@ function LoggIn() {
 
   return (
 <section className="loggIn dark-theme">
-    <section className='blurp'>
+    <section className='logg-section'>
       <div className='sign-section'>
         <section className='form'>
           <p className='admin'>Användarnamn</p>
@@ -77,6 +77,12 @@ function LoggIn() {
           <form onSubmit={handleSubmit}>
              <button className="continue">Logga In</button>
           </form>
+
+          <Link to={"/admin"}>
+            <button className="admin-loggin">Logga in
+            </button>
+          </Link> 
+        
         </section>
       </div>
     </section>

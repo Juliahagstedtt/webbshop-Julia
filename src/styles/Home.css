@@ -1,18 +1,25 @@
 .home-text {
     margin-bottom: 70px;
+    margin-top: 10px;
 }
 
 .barbi-img1 {
-    max-width: 300px;
+    max-width: 500px;
     margin: 50px;
-    margin-bottom: 120px;
     margin-left: 10px;
 }
 
-h2 {
-    color: #6c6c6c;
-    margin-bottom: 50px;
-}
+.home-info {
+    background-color: #45424364;
+    width: 500px;
+    padding: 30px;
+    color: #ffffff;
+    margin: 20px auto; 
+    border-radius: 15px;
+    font-size: 18px;
+    font-style: italic;
+    text-align: center; 
+  }
 
 .product-button {
     background-color: #FF3499;
@@ -20,6 +27,29 @@ h2 {
     border: none;
     padding: 10px;
     border-radius: 9px;
-    width: 100px;
-    margin-top: 20px;
-}
+    width: 10%;
+    font-size: 16px;}
+
+
+@media (max-width: 320px) {
+    .barbi-img1 {
+        max-width: 90%;
+        margin: 20px auto;
+        display: block;
+      }
+
+    .home-info {
+      width: 90%;
+      padding: 20px;
+      font-size: 16px;
+    }
+    .home-text {
+        font-size: 23px;
+        text-align: center;
+      }
+    
+      .product-button {
+        width: 80%;
+        font-size: 16px;
+      }
+    }

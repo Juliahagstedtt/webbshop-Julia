@@ -10,6 +10,17 @@ import shopIcon from '../assets/shopIcon.svg';
     return (
         <>
         <div className="products">
+        <input type="serch" placeholder="sök" className='serch'></input>
+
+
+        <select className="dropdown">
+            <option value="">Sortera</option>
+            <option value="dockor">Dockor</option>
+            <option value="kläder">Kläder</option>
+            <option value="tillbehör">Tillbehör</option>
+        </select>
+
+
             <h1>
                 Välkommen till Produktsidan!</h1>
                 <div className='products-container'>

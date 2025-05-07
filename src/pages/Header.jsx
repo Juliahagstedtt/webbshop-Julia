@@ -14,6 +14,8 @@ function Header() {
                 </button>
                 </Link>
 
+            {/* <input type="serch" placeholder="sök" className='serch'></input> */}
+
                 <Link to="/cart">
                 <button className='cart'>
                     <img src={cartIcon} alt="cart-icon" className="cart-icon"/>

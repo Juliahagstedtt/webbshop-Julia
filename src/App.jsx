@@ -7,6 +7,8 @@ import Cart from './pages/Cart';
 import Home from './pages/Home';
 import Footer from './pages/Footer';
 import LoggIn from './pages/LoggIn';
+import Admin from './pages/Admin';
+import AddNewProduct from './pages/AddNewProduct';
 
 function App() {
   const [count, setCount] = useState(0)
@@ -20,6 +22,8 @@ function App() {
           <Route path='/Cart' element={<Cart />} />
           <Route path='/Products' element={<Products />} />
           <Route path='/loggin' element={<LoggIn />} />
+          <Route path='/admin' element={<Admin />} />
+          <Route path='/addnewproduct' element={<AddNewProduct />} />
         </Routes>
         <main>
         </main>
