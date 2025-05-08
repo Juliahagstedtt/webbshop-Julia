@@ -2,4 +2,18 @@
     background-color: #FF3499;
     height: 100px;
     margin-top: 30px;
+
+    display: flex;
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 0 20px; 
+}
+
+.loggin {
+    background: none;
+    border: none;
+}
+
+.loggin:hover {
+    background-color: #ffa9c4;
 }

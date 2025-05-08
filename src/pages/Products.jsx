@@ -1,12 +1,26 @@
+import { useEffect, useState } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from "../config/firebase";
 import { Link } from 'react-router-dom';
-import products from '../data/products';
 import '../styles/Products.css'
 import shopIcon from '../assets/shopIcon.svg';
 
  function Products() {
+    const [Products, setProducts] = useState([]);
+
+    useEffect(() => {
+        async function fetchData() {
+            const querySnapshot = await getDocs(collection(db, "products"));
+        const productsArray = querySnapshot.docs.map(doc => ({ 
+            id: doc.id,
+            ...doc.data()
+        }));
+        setProducts(productsArray);
+        }
+        fetchData();
+    }, []);
 
 
-    
     return (
         <>
         <div className="products">
@@ -20,47 +34,19 @@ import shopIcon from '../assets/shopIcon.svg';
             <option value="tillbehör">Tillbehör</option>
         </select>
 
-
-            <h1>
-                Välkommen till Produktsidan!</h1>
-                <div className='products-container'>
-                    <h3>Namn</h3> 
-                    <p>199 kr</p> 
-                    <button className='shop-icon'>
-                        <img src={shopIcon} alt="shop-icon" className="shop-icon"/>
-                    </button>
-                </div>
-
-
-                <div className='products-container'>
-                    <h3>Namn</h3> 
-                    <p>199 kr</p> 
-                    <button className='shop-icon'>
-                        <img src={shopIcon} alt="shop-icon" className="shop-icon"/>
-                    </button>
-                </div>
-
-                <div className='products-container'>
-                    <h3>Namn</h3> 
-                    <p>199 kr</p> 
-                    <button className='shop-icon'>
-                        <img src={shopIcon} alt="shop-icon" className="shop-icon"/>
-                    </button>
-                </div>
-                <div className='products-container'>
-                    <h3>Namn</h3> 
-                    <p>199 kr</p> 
-                    <button className='shop-icon'>
-                        <img src={shopIcon} alt="shop-icon" className="shop-icon"/>
-                    </button>
-                </div>
-                <div className='products-container'>
-                    <h3>Namn</h3> 
-                    <p>199 kr</p> 
-                    <button className='shop-icon'>
-                        <img src={shopIcon} alt="shop-icon" className="shop-icon"/>
-                    </button>
-                </div>
+            
+            <h1>Välkommen till Produktsidan!</h1>
+            {Products.map((product) => (
+                
+            <div key={product.id} className='products-container'>
+                <h3>{product.name}</h3>
+                <p>{product.price} kr</p>
+                <img src={product.imageUrl} alt={product.description} width="200" />
+                <button className='shop-icon'>
+                    <img src={shopIcon} alt="shop-icon" className="shop-icon"/>
+                </button>
+            </div>
+            ))}
 
         
         </div>
