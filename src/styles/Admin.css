@@ -28,6 +28,13 @@
 
 }
 
+.reset-button {
+    background-color: rgb(187, 204, 172);
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
+}
+
 .existing-p-list {
     display: flex;
     flex-direction: column;

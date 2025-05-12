@@ -4,6 +4,7 @@ import { db } from "../config/firebase";
 import { Link } from 'react-router-dom';
 import '../styles/Products.css'
 import shopIcon from '../assets/shopIcon.svg';
+// import useProductStore from "../data/ProductStore"; 
 import { useStore } from 'zustand';
 
  function Products() {
@@ -32,8 +33,8 @@ import { useStore } from 'zustand';
         <select className="dropdown">
             <option value="">Sortera</option>
             <option value="dockor">Dockor</option>
-            <option value="kläder">Kläder</option>
-            <option value="tillbehör">Tillbehör</option>
+            <option value="kläder">Kläder & Accessoarer</option>
+            <option value="tillbehör">Barbie Livsstil</option>
         </select>
 
             
@@ -45,7 +46,7 @@ import { useStore } from 'zustand';
                 <p>{product.price} kr</p>
                 <img src={product.imageUrl} alt={product.description} width="200" />
                 <button className='shop-icon'>
-                    <img src={shopIcon} alt="shop-icon" className="shop-icon"/>
+                    <img src={shopIcon} alt="shop-icon" className="shop-icon" onClick={() => addToCart(product)}/>
                 </button>
             </div>
             ))}

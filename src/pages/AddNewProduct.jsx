@@ -1,42 +1,121 @@
-import { Link } from "react-router";
-
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { collection, addDoc } from "firebase/firestore";
 import '../styles/AddNewProduct.css'
+import { db } from "../config/firebase";
+import Joi from "joi";
 
+const schema = Joi.object({
+    title: Joi.string().min(2).required().messages({
+        "string.empty": "Namn på produkt krävs",
+        "string.min": "Produktnamnet måste vara minst 4 tecken"
+    }),
+    description: Joi.string().min(5).required().messages({
+        "string.empty": "Beskrivning krävs",
+        "string.min":  "Beskrivning måste vara minst 5 tecken"
+    }),
+    price: Joi.number().min(1).required().messages({
+        "number.base": "Pris måste vara en siffra",
+        "number.min": "Priset måste vara minst 1 siffra",
+        "any.required": "Pris krävS"
+    }),
+    image: Joi.string().min(2).required().messages({
+        "string.empty": "Bild-URL krävs",
+        "string.uri": "URL måste vara en giltig länk"
+    })
+
+});
 function AddNewProduct() {
-    return(
-        <>
-        <div>
+    const [formData, setFormData] = useState({
+        title: "",
+        description: "",
+        price: "",
+        image: ""
+    });
 
-        <Link to={"/admin"}>
-            <button className="admin-button"> Ändra Produkt
-            </button>
-        </Link>            
-        
-        <Link to={"/addnewproduct"}>
-            <button className="admin-button"> Lägg till Produkt
-            </button>
-        </Link> 
+const [errors, setErrors] = useState({});
+const navigate = useNavigate();
+
+const handleChange = (e) => {
+    setFormData(prev => ({
+        ...prev,
+        [e.target.name]: e.target.value 
+    }));
+};
 
 
-        <div className="add-new">
-            <input placeholder="Titel"></input>
-            <input placeholder="Beskrivning"></input>
-            <input placeholder="Pris"></input>
-            <input></input>
+const handleSubmit = async () => {
+    const validation = schema.validate(formData, { abortEarly: false });
+    if (validation.error) {
+        const newErrors = {};
+        validation.error.details.forEach(err => {
+            newErrors[err.path[0]] = err.message;
+        });
+        setErrors(newErrors);
+        return;
+    }
 
-            <Link to={"/admin"}>
-                <button className="add-button">Lägg till produkt
-            </button>
-        </Link>  
+    try {
+        await addDoc(collection(db, "products"), {
+            ...formData,
+            price: Number(formData.price),
+            isDeleted: false
+        });
+        navigate("/admin"); 
+    } catch (err) {
+        console.error("Fel vid tillägg", err);
+    }
+};
 
-        </div>
+return (
+    <div>
+      <Link to={"/admin"}>
+        <button className="admin-button">Ändra Produkt</button>
+      </Link>
+      <Link to={"/addnewproduct"}>
+        <button className="admin-button">Lägg till Produkt</button>
+      </Link>
 
-   
+      <div className="add-new">
+        <input
+          name="title"
+          placeholder="Titel"
+          value={formData.title}
+          onChange={handleChange}
+        />
+        {errors.title && <p className="error">{errors.title}</p>}
 
-            {/* <img src={barbie2} alt="barbie1" className="barbi-img2"/> */}
-        </div>
-        </>
-    );
+        <input
+          name="description"
+          placeholder="Beskrivning"
+          value={formData.description}
+          onChange={handleChange}
+        />
+        {errors.description && <p className="error">{errors.description}</p>}
+
+        <input
+          name="price"
+          type="number"
+          placeholder="Pris"
+          value={formData.price}
+          onChange={handleChange}
+        />
+        {errors.price && <p className="error">{errors.price}</p>}
+
+        <input
+          name="image"
+          placeholder="Bild-URL"
+          value={formData.image}
+          onChange={handleChange}
+        />
+        {errors.image && <p className="error">{errors.image}</p>}
+
+        <button className="add-button" onClick={handleSubmit}>
+          Lägg till produkt
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export default AddNewProduct;        
