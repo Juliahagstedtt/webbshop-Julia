@@ -4,9 +4,11 @@ import { db } from "../config/firebase";
 import { Link } from 'react-router-dom';
 import '../styles/Products.css'
 import shopIcon from '../assets/shopIcon.svg';
+import { useStore } from 'zustand';
 
  function Products() {
     const [Products, setProducts] = useState([]);
+    // const { assToCart } = useStore();
 
     useEffect(() => {
         async function fetchData() {
