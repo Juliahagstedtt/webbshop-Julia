@@ -4,8 +4,8 @@ import { Link } from 'react-router';
 function Cart() {
     return(
         <>
+        {/* Påbörjad, To Do!! */}
         <div className='cart-section'>
-            <section>
         
         <div className='cart-items'>
             <p>Barbiedocka......79kr</p>
@@ -23,7 +23,6 @@ function Cart() {
                     <button className="continue">Fortsätt</button>
                 </Link>
 
-            </section>
         </div>
         </>
     )

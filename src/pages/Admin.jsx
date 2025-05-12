@@ -8,123 +8,154 @@ import { db } from "../config/firebase";
 import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
 // import useProductStore from "../data/ProductStore"; 
 
-
 function Admin() {
-const [products, setProducts] = useState([]);
-const [originalProducts, setOriginalProducts] = useState([]);
-const [editId, setEditId] = useState(null);
-const [editValues, setEditValues] = useState({ name: "", description: "", price: "", image: ""});
-
-useEffect(() => {
-    const fetchProducts = async () => {
-        const querySnapshot = await getDocs(collection(db, "products"));
+    // Lista över produkter
+    const [products, setProducts] = useState([]);
+    // Ursprunglig produktlista (används för återställning)
+    const [originalProducts, setOriginalProducts] = useState([]);
+    // Håller reda på vilken produkt som redigeras just nu
+    const [editId, setEditId] = useState(null);
+    // Innehåller de redigerade värdena för produktfält
+    const [editValues, setEditValues] = useState({
+      name: "", description: "", price: "", image: ""
+    });
+  
+    // Hämtar alla produkter från Firestore när sidan laddas
+    useEffect(() => {
+      const fetchProducts = async () => {
+        const querySnapshot = await getDocs(collection(db, "products")); // hämtar dokument från "products"
+        
+        // Skapar en lista med produkter som inte är borttagna
         const productList = querySnapshot.docs
-        .map((doc) => ({ id: doc.id, ...doc.data() }))
-        .filter((product) => !product.isDeleted);
-        fetchProducts();
+          .map((doc) => ({ id: doc.id, ...doc.data() }))
+          .filter((product) => !product.isDeleted); // filtrerar/tar bort  "borttagna" produkter
+  
         setProducts(productList);
         setOriginalProducts(productList);
-    };
-    fetchProducts();
-}, []);
-
-const handleRemove = async (id) => {
-    try {
-        const docRef = doc(db, "products", id);
-        await updateDoc(docRef, { isDeleted: true });
+      };
+  
+      fetchProducts(); 
+    }, []);
+  
+    // När man klickar på papperskorg, markeras produkten som borttagen
+    const handleRemove = async (id) => {
+      try {
+        const docRef = doc(db, "products", id); 
+        await updateDoc(docRef, { isDeleted: true }); 
+  
+        // Uppdaterar listan och tar bort produkten från vyn
         setProducts((prev) => prev.filter((product) => product.id !== id));
         console.log("Produkten har tagits bort.");
-    } catch (error) {
-        console.error("Fel vid borttagningen", error)
+      } catch (error) {
+        console.error("Fel vid borttagningen", error);
+      }
+    };
+  
+    // När man klickar på redigera-knappen så visas input-fält och spara kanpp
+    const handleEditClick = (product) => {
+      setEditId(product.id); // visar vilken produkt som redigeras
+      setEditValues({ 
+        name: product.name, 
+        description: product.description, 
+        price: product.price, 
+        image: product.image 
+      });
+    };
+  
+    // Uppdaterar inputfält när man skriver i dem
+    const handleInputChange = (e) => {
+      setEditValues({ ...editValues, [e.target.name]: e.target.value });
     }
-  };
-
-const handleEditClick = (product) => {
-    setEditId(product.id);
-    setEditValues({ name: product.name, description: product.description, price: product.price, image: product.image });
-};
-
-const handleInputChange = (e) => {
-    setEditValues({ ...editValues, [e.target.name]: e.target.value });
-}
-
-const handleSave = async (id) => {
-    const docRef = doc(db, "products", id);
-    await updateDoc(docRef, {
+  
+    // Sparar ändringar till firestore och uppdaterar listan
+    const handleSave = async (id) => {
+      const docRef = doc(db, "products", id); 
+  
+      // Uppdaterar värden i firestore
+      await updateDoc(docRef, {
         name: editValues.name,
         description: editValues.description,
         price: editValues.price,
-    });
-
-    setProducts((prev) => 
-    prev.map((product) => 
-    product.id === id ? { ...product, ...editValues } : product
-    )
-    );
-
-    setOriginalProducts((prev) =>
-    prev.map((product) => 
-        product.id === id ? { ...product, ...editValues } : product
-    )
-    );
-
-    setEditId(null);
-};
-
-const handleReset = async () => {
-    const querySnapshot = await getDocs(collection(db, "products"));
-    const productList = querySnapshot.docs
-    .map((doc) => ({ id: doc.id, ...doc.data() }))
-    .filter((product) => !product.isDeleted);
-
-    setProducts(productList);
-    setOriginalProducts(productList);
-    setEditId(null);
-}
-
-return (
-    <div>
-      <Link to={"/admin"}>
-        <button className="admin-button">Ändra Produkt</button>
-      </Link>
-
-      <Link to={"/addnewproduct"}>
-        <button className="admin-button">Lägg till Produkt</button>
-      </Link>
-
-
-      <div className="existing-p-list">
-        <button className="reset-button" onClick={handleReset}>Återställ Produkter</button>   
-        {products.map((product) => (
-          <div key={product.id} className="product-item">
-            {editId === product.id ? (
-              <>
-                <input name="name" value={editValues.name} onChange={handleInputChange} />
-                <input name="description" value={editValues.description} onChange={handleInputChange} />
-                <input name="price" value={editValues.price} onChange={handleInputChange} />
-                <input name="image" value={editValues.image} onChange={handleInputChange} />
-                <button className="add-button" onClick={() => handleSave(product.id)}>Spara</button>
-              </>
-            ) : (
-              <>
-                <p>{product.name}</p>
-                <p>{product.description}</p>
-                <p>{product.price} kr</p>
-
-                <button className='trashcan' onClick={() => handleRemove(product.id)}>
-                  <img src={TrashCan} alt="trashcan" className="trashcan" />
-                </button>
-
-                <button className='edit' onClick={() => handleEditClick(product)}>
-                  <img src={Edit} alt="edit" className="edit" />
-                </button>
-              </>
-            )}
-          </div>
-        ))}
+      });
+  
+      // Uppdaterar produkten lokalt
+      setProducts((prev) => 
+        prev.map((product) => 
+          product.id === id ? { ...product, ...editValues } : product
+        )
+      );
+  
+      // Ändrar även originalprodukterna
+      setOriginalProducts((prev) =>
+        prev.map((product) => 
+          product.id === id ? { ...product, ...editValues } : product
+        )
+      );
+  
+      setEditId(null); // avslutar redigeringsläge
+    };
+  
+    // Återställer produkterna till original (t.ex. om man ångrat sig)
+    const handleReset = async () => {
+      const querySnapshot = await getDocs(collection(db, "products"));
+      const productList = querySnapshot.docs
+        .map((doc) => ({ id: doc.id, ...doc.data() }))
+        .filter((product) => !product.isDeleted);
+  
+      setProducts(productList);
+      setOriginalProducts(productList);
+      setEditId(null); // avslutar redigering
+    };
+  
+    return (
+      <div>
+        {/* Knapp till admin-sidan */}
+        <Link to={"/admin"}>
+          <button className="admin-button">Ändra Produkt</button>
+        </Link>
+  
+        {/* Knapp till lägga till en ny produkt sidan*/}
+        <Link to={"/addnewproduct"}>
+          <button className="admin-button">Lägg till Produkt</button>
+        </Link>
+  
+        {/* Lista med produkter */}
+        <div className="existing-p-list">
+          <button className="reset-button" onClick={handleReset}>Återställ Produkter</button>   
+  
+          {products.map((product) => (
+            <div key={product.id} className="product-item">
+              {editId === product.id ? (
+                // Vid redigering visas inputfält
+                <>
+                  <input name="name" value={editValues.name} onChange={handleInputChange} />
+                  <input name="description" value={editValues.description} onChange={handleInputChange} />
+                  <input name="price" value={editValues.price} onChange={handleInputChange} />
+                  <input name="image" value={editValues.image} onChange={handleInputChange} />
+                  <button className="add-button" onClick={() => handleSave(product.id)}>Spara</button>
+                </>
+              ) : (
+                <>
+                  <p>{product.name}</p>
+                  <p>{product.description}</p>
+                  <p>{product.price} kr</p>
+  
+                  {/* Ta bort-produkt-knapp */}
+                  <button className='trashcan' onClick={() => handleRemove(product.id)}>
+                    <img src={TrashCan} alt="trashcan" className="trashcan" />
+                  </button>
+  
+                  {/* Redigera-produkt-knapp */}
+                  <button className='edit' onClick={() => handleEditClick(product)}>
+                    <img src={Edit} alt="edit" className="edit" />
+                  </button>
+                </>
+              )}
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
-  );
-}
-
-export default Admin;    
+    );
+  }
+  
+  export default Admin;

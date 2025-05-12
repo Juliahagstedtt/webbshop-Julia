@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchProducts } from "../config/firebase";
-
+// Hämtar all data (produkterna) från firebase
 function ProductList() {
     const [products, setProducts] = useState([]);
 

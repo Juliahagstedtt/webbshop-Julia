@@ -2,7 +2,7 @@ import { Link } from "react-router";
 import '../styles/Home.css'
 import barbie1 from '../assets/barbie1.jpg';
 
-
+// Hemsidan
 function Home() {
     return(
         <>

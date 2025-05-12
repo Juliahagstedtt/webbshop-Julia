@@ -5,6 +5,7 @@ import '../styles/AddNewProduct.css'
 import { db } from "../config/firebase";
 import Joi from "joi";
 
+// validering för formulär i lägg till ny produkt
 const schema = Joi.object({
     title: Joi.string().min(2).required().messages({
         "string.empty": "Namn på produkt krävs",
@@ -33,8 +34,8 @@ function AddNewProduct() {
         image: ""
     });
 
-const [errors, setErrors] = useState({});
-const navigate = useNavigate();
+    const [errors, setErrors] = useState({}); // Valideringsfel
+    const navigate = useNavigate(); // Navigering efter inskickat formulär
 
 const handleChange = (e) => {
     setFormData(prev => ({
@@ -47,6 +48,7 @@ const handleChange = (e) => {
 const handleSubmit = async () => {
     const validation = schema.validate(formData, { abortEarly: false });
     if (validation.error) {
+        // Vid fel, samla alla fel och visa dem
         const newErrors = {};
         validation.error.details.forEach(err => {
             newErrors[err.path[0]] = err.message;
@@ -56,9 +58,10 @@ const handleSubmit = async () => {
     }
 
     try {
+        // Spara produkten i Firestore
         await addDoc(collection(db, "products"), {
             ...formData,
-            price: Number(formData.price),
+            price: Number(formData.price), // Se till att pris är nummer
             isDeleted: false
         });
         navigate("/admin"); 

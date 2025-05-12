@@ -4,6 +4,7 @@ import logo from '../assets/logo.svg';
 import cartIcon from '../assets/cartIcon.png';
 import '../styles/Header.css';
 
+// Headern
 function Header() {
     return (
         <header className="header-meny">
