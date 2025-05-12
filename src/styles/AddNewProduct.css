@@ -7,6 +7,7 @@
     text-align: center;
     display: inline-block;
     text-decoration: none;
+    margin-bottom: 30px;
   }
   
   .admin-button:hover {
@@ -22,11 +23,12 @@ input {
 
   .add-new {
     background-color: rgb(72, 72, 72);
-    width: 300px;
-    height: 400px;
-    padding: 20px;
-    margin-top: 40px;
     border-radius: 10px;
+    margin: 0 auto;   
+    width: 300px;   
+    height: 300px;
+    text-align: center;        
+    padding: 30px;
   }
 
 .add-button {
@@ -37,4 +39,12 @@ input {
     border-radius: 9px;
     width: 150px;
     margin-top: 10px;
+}
+
+@media (max-width: 400px) {
+  .admin-button {
+    width: 50%;
+    padding: 15px;
+    font-size: 14px;
+  }
 }

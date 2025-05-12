@@ -1,10 +1,32 @@
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 import '../styles/Admin.css'
 import TrashCan from '../assets/TrashCan.png';
 import Edit from '../assets/Edit.png';
+import { useState, useEffect } from "react";
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from "../config/firebase";
 
 
 function Admin() {
+
+const [products, setProducts] = useState([]);
+
+useEffect(() => {
+    const fetchProducts = async () => {
+        const querySnapshot = await getDocs(collection(db, "products"));
+        const productList = querySnapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...doc.data(),
+        }));
+        setProducts(productList);
+    };
+    fetchProducts();
+}, []);
+
+const handleRemove = (id) => {
+    setProducts((prevProducts) => prevProducts.filter(product => product.id !== id));
+  };
+
     return(
         <>
         <div>
@@ -18,22 +40,27 @@ function Admin() {
             </button>
         </Link> 
 
+
+
         <div className="existing-p-list">
-        <p>Beskrivnin: rosa glitter m.m  Pris 199kr</p>
+            {products.map((product) => (
+                <div key={product.id} className="product-item">
+                    <p className="product-name">{product.name}</p>
+                    <p>{product.description} - {product.price} kr</p>        
 
-
-                <button className='trashcan'>
+                <button className='trashcan' onClick={() => handleRemove(product.id)}>
                     <img src={TrashCan} alt="trashcan" className="trashcan"/>
                 </button>
 
                 <button className='edit'>
                     <img src={Edit} alt="edit" className="edit"/>
                 </button>
-
+               </div> 
+                 ))}
+            </div>
         </div>
-
-
-        </div>
+        <button>Återställ Produkter</button>
+        <button>Förnya produkter</button>
         </>
     );
 }
