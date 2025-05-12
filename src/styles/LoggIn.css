@@ -1,5 +1,4 @@
 
-
 main {
     background-color: black;
 }
@@ -29,7 +28,7 @@ main {
   
   
   .input-box {
-    color: white;
+    color: rgb(0, 0, 0);
     background-color: white;
     width: 90%; 
     border: 2px solid rgb(255, 255, 255);

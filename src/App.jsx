@@ -12,7 +12,6 @@ import AddNewProduct from './pages/AddNewProduct';
 import { fetchProducts } from './config/firebase';
 import ProductList from "./pages/ProductList";
 
-
 function App() {
   const [count, setCount] = useState(0)
 
@@ -27,6 +26,7 @@ function App() {
           <Route path="/loggIn" element={<LoggIn />} />
           <Route path='/admin' element={<Admin />} />
           <Route path='/addnewproduct' element={<AddNewProduct />} />
+          <Route path="/edit/:id" element={<EditProduct />} />
         </Routes>
         <main>
         </main>
