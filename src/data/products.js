@@ -2,16 +2,16 @@ import App from "../App";
 
 const products = [
   {
-    id: "1",
+    // id: "1",
     name: "Barbie Stranddröm",
     price: 279,
     category: "Dockor",
-    imageUrl: "https://images.mattel.net/image/upload/w_1292,f_auto,c_scale/shop-us-prod/files/f7m2xaazgacnlq90h4u1.jpg",
+    imageUrl: "https://outofhome.se/media/catalog/product/cache/30/image/17f82f742ffe127f42dca9de82fb58b1/9/0/90042529_cocacola_original_burk.jpg",
     description: "Barbie i färgglad baddräkt, redo för stranden.",
     stock: 10
   },
   {
-    id: "2",
+    // id: "2",
     name: "Barbie Veterinär",
     price: 299,
     category: "Dockor",
@@ -20,7 +20,7 @@ const products = [
     stock: 10
   },
   {
-    id: "3",
+    // id: "3",
     name: "Barbie Ballerina",
     price: 199,
     category: "Dockor",
@@ -29,7 +29,7 @@ const products = [
     stock: 10
   },
   {
-    id: "4",
+    // id: "4",
     name: "Barbie Brandman",
     price: 279,
     category: "Dockor",
@@ -38,7 +38,7 @@ const products = [
     stock: 10
   },
   {
-    id: "5",
+    // id: "5",
     name: "Barbie Popstjärna",
     price: 289,
     category: "Dockor",
@@ -47,7 +47,7 @@ const products = [
     stock: 10
   },
   {
-    id: "6",
+    // id: "6",
     name: "Barbie Astronaut",
     price: 349,
     category: "Dockor",
@@ -56,7 +56,7 @@ const products = [
     stock: 10
   },
   {
-    id: "7",
+    // id: "7",
     name: "Barbie Bagare",
     price: 229,
     category: "Dockor",
@@ -65,7 +65,7 @@ const products = [
     stock: 10
   },
   {
-    id: "8",
+    // id: "8",
     name: "Barbie Skidåkare",
     price: 269,
     category: "Dockor",
@@ -74,7 +74,7 @@ const products = [
     stock: 10
   },
   {
-    id: "9",
+    // id: "9",
     name: "Barbie Pilot",
     price: 299,
     category: "Dockor",
@@ -83,7 +83,7 @@ const products = [
     stock: 10
   },
   {
-    id: "10",
+    // id: "10",
     name: "Barbie Djurvän",
     price: 219,
     category: "Dockor",
@@ -94,7 +94,7 @@ const products = [
 
   // Kläder & Accessoarer (10 produkter)
   {
-    id: "11",
+    // id: "11",
     name: "Barbie Klänningsset",
     price: 129,
     category: "Kläder & Accessoarer",
@@ -103,7 +103,7 @@ const products = [
     stock: 10
   },
   {
-    id: "12",
+    // id: "12",
     name: "Barbie Väska & Skor",
     price: 99,
     category: "Kläder & Accessoarer",
@@ -112,7 +112,7 @@ const products = [
     stock: 10
   },
   {
-    id: "13",
+    // id: "13",
     name: "Barbie Solglasögon",
     price: 49,
     category: "Kläder & Accessoarer",
@@ -121,7 +121,7 @@ const products = [
     stock: 10
   },
   {
-    id: "14",
+    // id: "14",
     name: "Barbie Halsband",
     price: 59,
     category: "Kläder & Accessoarer",
@@ -130,7 +130,7 @@ const products = [
     stock: 10
   },
   {
-    id: "15",
+    // id: "15",
     name: "Barbie Hatt & Handskar",
     price: 79,
     category: "Kläder & Accessoarer",
@@ -139,7 +139,7 @@ const products = [
     stock: 10
   },
   {
-    id: "16",
+    // id: "16",
     name: "Barbie Regnjacka",
     price: 109,
     category: "Kläder & Accessoarer",
@@ -148,7 +148,7 @@ const products = [
     stock: 10
   },
   {
-    id: "17",
+    // id: "17",
     name: "Barbie Sportkläder",
     price: 119,
     category: "Kläder & Accessoarer",
@@ -157,7 +157,7 @@ const products = [
     stock: 10
   },
   {
-    id: "18",
+    // id: "18",
     name: "Barbie Badkläder",
     price: 69,
     category: "Kläder & Accessoarer",
@@ -166,7 +166,7 @@ const products = [
     stock: 10
   },
   {
-    id: "19",
+    // id: "19",
     name: "Barbie Skor & Strumpor",
     price: 49,
     category: "Kläder & Accessoarer",
@@ -174,7 +174,7 @@ const products = [
     description: "En uppsättning skor och strumpor för Barbie.",
     stock: 10
   },  {
-    id: "20",
+    // id: "20",
     name: "Barbie Handväska",
     price: 89,
     category: "Kläder & Accessoarer",
@@ -182,7 +182,7 @@ const products = [
     description: "En stilren handväska för Barbie.",
     stock: 10
   },{
-    id: "21",
+    // id: "21",
     name: "Barbie Hus",
     price: 599,
     category: "Barbie Livsstil",
@@ -191,7 +191,7 @@ const products = [
     stock: 10
     },
     {
-    id: "22",
+    // id: "22",
     name: "Barbie Bil",
     price: 399,
     category: "Barbie Livsstil",
@@ -200,7 +200,7 @@ const products = [
     stock: 10
     },
     {
-    id: "23",
+    // id: "23",
     name: "Barbie Häst & Sadel",
     price: 349,
     category: "Barbie Livsstil",
@@ -209,7 +209,7 @@ const products = [
     stock: 10
     },
     {
-    id: "24",
+    // id: "24",
     name: "Barbie Båt",
     price: 449,
     category: "Barbie Livsstil",
@@ -218,7 +218,7 @@ const products = [
     stock: 10
     },
     {
-    id: "25",
+    // id: "25",
     name: "Barbie Cykel",
     price: 249,
     category: "Barbie Livsstil",
@@ -227,7 +227,7 @@ const products = [
     stock: 10
     },
     {
-    id: "26",
+    // id: "26",
     name: "Barbie Vattenskoter",
     price: 399,
     category: "Barbie Livsstil",
@@ -236,7 +236,7 @@ const products = [
     stock: 10
     },
     {
-    id: "27",
+    // id: "27",
     name: "Barbie Campingvagn",
     price: 499,
     category: "Barbie Livsstil",
@@ -245,7 +245,7 @@ const products = [
     stock: 10
     },
     {
-      id: "28",
+      // id: "28",
       name: "Barbie Drömhus",
       price: 799,
       category: "Barbie Livsstil",
@@ -254,7 +254,7 @@ const products = [
       stock: 5
     },
     {
-      id: "29",
+      // id: "29",
       name: "Barbie Ferrari",
       price: 799,
       category: "Barbie Livsstil",
@@ -263,7 +263,7 @@ const products = [
       stock: 7
     },
     {
-      id: "30",
+      // id: "30",
       name: "Barbie Husvagn",
       price: 899,
       category: "Barbie Livsstil",

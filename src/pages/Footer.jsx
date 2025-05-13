@@ -7,7 +7,7 @@ function Footer() {
     return(
         <>
         <div className="Footer">
-            <p>© 2025 Barbie Toy Shop – Alla rättigheter förbehållna  Kontakt: barbietoys@mail.com</p>
+            <p>© 2025 Barbie Toy Shop – Alla rättigheter förbehållna.  Kontakt: barbietoys@mail.com</p>
 
             <Link to={"/loggIn"}>
                 <button className='loggin'>

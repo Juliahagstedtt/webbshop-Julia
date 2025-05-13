@@ -8,7 +8,7 @@ function Cart() {
         <div className='cart-section'>
         
         <div className='cart-items'>
-            <p>Barbiedocka......79kr</p>
+            <p>Titel...................................... kr</p>
             <button className='increase'>+</button>
             <button className='decrease'>-</button>
 

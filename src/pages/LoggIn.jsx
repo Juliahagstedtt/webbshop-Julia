@@ -6,7 +6,7 @@ import { useState } from 'react';
 function LoggIn() {
 
   // State för att hålla reda på användarnamn och lösenord
-  const [name, setName] = useState('');
+  const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
 
   // State för att hantera felmeddelanden
@@ -65,6 +65,8 @@ function LoggIn() {
               value={name}  // Håller reda på användarens inmatade namn
               onChange={(e) => setName(e.target.value)}
             />
+               {error && <p className="error-inlogg">{error}</p>}  
+
 
             <p className='admin'>Lösenord</p>
             <input

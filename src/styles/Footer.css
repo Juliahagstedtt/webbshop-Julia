@@ -12,6 +12,7 @@
 .loggin {
     background: none;
     border: none;
+    cursor: pointer;
 }
 
 .loggin:hover {

@@ -8,6 +8,9 @@ import { db } from "../config/firebase";
 import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
 // import useProductStore from "../data/ProductStore"; 
 
+// lOGGA UT? Local storage?
+// TO DO! Validera ändra 
+
 function Admin() {
     // Lista över produkter
     const [products, setProducts] = useState([]);
@@ -42,6 +45,7 @@ function Admin() {
       try {
         const docRef = doc(db, "products", id); 
         await updateDoc(docRef, { isDeleted: true }); 
+        // dubbelkolla så att de försvinner på firestore
   
         // Uppdaterar listan och tar bort produkten från vyn
         setProducts((prev) => prev.filter((product) => product.id !== id));
@@ -55,7 +59,7 @@ function Admin() {
     const handleEditClick = (product) => {
       setEditId(product.id); // visar vilken produkt som redigeras
       setEditValues({ 
-        name: product.name, 
+        title: product.name, 
         description: product.description, 
         price: product.price, 
         image: product.image 
@@ -73,7 +77,7 @@ function Admin() {
   
       // Uppdaterar värden i firestore
       await updateDoc(docRef, {
-        name: editValues.name,
+        title: editValues.title,
         description: editValues.description,
         price: editValues.price,
       });
@@ -121,17 +125,19 @@ function Admin() {
   
         {/* Lista med produkter */}
         <div className="existing-p-list">
-          <button className="reset-button" onClick={handleReset}>Återställ Produkter</button>   
+          {/* <button className="reset-button" onClick={handleReset}>Återställ Produkter</button>    */}
+            <button className="loggout-button">Logga ut</button>   
+
   
           {products.map((product) => (
-            <div key={product.id} className="product-item">
+            <div key={product.id} className="product-item" >
               {editId === product.id ? (
                 // Vid redigering visas inputfält
                 <>
-                  <input name="name" value={editValues.name} onChange={handleInputChange} />
-                  <input name="description" value={editValues.description} onChange={handleInputChange} />
-                  <input name="price" value={editValues.price} onChange={handleInputChange} />
-                  <input name="image" value={editValues.image} onChange={handleInputChange} />
+                  <input name="name"  value={editValues.name} onChange={handleInputChange}/>
+                  <input name="description"  value={editValues.name} onChange={handleInputChange}/>
+                  <input name="price"  value={editValues.name} onChange={handleInputChange} />
+                  <input name="image" value={editValues.name} onChange={handleInputChange}/>
                   <button className="add-button" onClick={() => handleSave(product.id)}>Spara</button>
                 </>
               ) : (

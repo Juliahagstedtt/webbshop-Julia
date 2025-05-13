@@ -4,14 +4,14 @@
 }
 
 .barbi-img1 {
-    max-width: 500px;
+    max-width: 300px;
     margin: 50px;
     margin-left: 10px;
 }
 
 .home-info {
     background-color: #45424364;
-    width: 500px;
+    width: 300px;
     padding: 30px;
     color: #ffffff;
     margin: 20px auto; 
@@ -49,7 +49,7 @@
       }
     
       .product-button {
-        width: 80%;
+        width: 100%;
         font-size: 16px;
       }
     }

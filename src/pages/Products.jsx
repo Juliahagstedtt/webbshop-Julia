@@ -10,13 +10,14 @@ import { useStore } from 'zustand';
 function Products() {
     // state variabel. Börjar som en tom lista, men kommer snart innehålla alla produkter från databasen.
     // "setProducts" används för att uppdatera innehållet i Products
-    const [Products, setProducts] = useState([]);
+    const [products, setProducts] = useState([]);
 
     // useEffect körs automatiskt EN gång när sidan laddas
     // Här används den för att hämta produktdata från Firestore
     useEffect(() => {
         // En asynkron funktion, väntar på att hämta data från internet.
         async function fetchData() {
+            
             // Firebase hämtar ALLA dokument från samlingen som heter "products". Alla produkter som har sparats i firestore
             const querySnapshot = await getDocs(collection(db, "products"));
 
@@ -36,7 +37,7 @@ function Products() {
 
     return (
         <>
-        <div className="products">
+        <div className="products-section">
             {/* Sökfält för produkter, (To Do! Inte gjord än)*/}
             <input type="serch" placeholder="sök" className='serch'></input>
 
@@ -49,14 +50,15 @@ function Products() {
             </select>
 
             <h1>Välkommen till Produktsidan!</h1>
-
+        <div className='products'>
             {/* Renderar varje produkt */}
-            {Products.map((product) => (
+            {products.map((product) => (
                 <div key={product.id} className='products-container'>
                     <h3>{product.name}</h3>
                     <p>{product.price} kr</p>
+                    {product.imageUrl && (
                     <img src={product.imageUrl} alt={product.description} width="200" />
-                    
+                    )}                    
                     {/* Knapp för att lägga till i varukorg */}
                     <button className='shop-icon'>
                         <img 
@@ -66,8 +68,10 @@ function Products() {
                             onClick={() => addToCart(product)} // To Do: addToCart inte gjord än
                         />
                     </button>
-                </div>
+                    </div>
+               
             ))}
+             </div>
         </div>
         </>
     );
