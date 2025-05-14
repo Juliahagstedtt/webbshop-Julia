@@ -35,3 +35,9 @@ button img:hover {
     border-radius: 20px;
 }
 
+.cart-counter {
+    color: #00a6ff;
+    background-color: purple;
+    position: absolute;
+    top: 5px;
+}

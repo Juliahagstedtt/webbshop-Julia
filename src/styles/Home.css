@@ -27,7 +27,6 @@
     border: none;
     padding: 10px;
     border-radius: 9px;
-    width: 10%;
     font-size: 16px;}
 
 
@@ -49,7 +48,7 @@
       }
     
       .product-button {
-        width: 100%;
+        width: 50%;
         font-size: 16px;
       }
     }

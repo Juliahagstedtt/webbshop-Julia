@@ -75,6 +75,21 @@ main {
     /* margin-bottom: 4px; */
     margin-right: 260px;
   }
+
+
+  .loggout-button {
+    background-color: #FF3499;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 9px;
+    width: 100px;
+    cursor: pointer;
+  }
+
+  .loggout-button:hover {
+    background-color: #ff87c3;
+  }
   
   @media (max-width: 480px) {
     .sign-section {

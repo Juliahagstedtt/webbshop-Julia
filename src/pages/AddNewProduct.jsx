@@ -11,6 +11,10 @@ const schema = Joi.object({
         "string.empty": "Namn på produkt krävs",
         "string.min": "Produktnamnet måste vara minst 4 tecken"
     }),
+    // category: Joi.object().min(3).required().message({
+    //     "object.empty": "Välj kategori",
+    //     "object.min": "Vänligen välj en kategori"
+    // }),
     description: Joi.string().min(5).required().messages({
         "string.empty": "Beskrivning krävs",
         "string.min":  "Beskrivning måste vara minst 5 tecken"
@@ -87,6 +91,14 @@ return (
           onChange={handleChange}
         />
         {errors.title && <p className="error">{errors.title}</p>}
+
+        {/* <input
+          name="category"
+          placeholder="Kategori"
+          value={formData.category}
+          onChange={handleChange}
+        />
+        {errors.category && <p className="error">{errors.category}</p>} */}
 
         <input
           name="description"

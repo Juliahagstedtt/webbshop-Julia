@@ -126,8 +126,9 @@ function Admin() {
         {/* Lista med produkter */}
         <div className="existing-p-list">
           {/* <button className="reset-button" onClick={handleReset}>Återställ Produkter</button>    */}
+          <Link to={"/loggin"}>
             <button className="loggout-button">Logga ut</button>   
-
+          </Link>
   
           {products.map((product) => (
             <div key={product.id} className="product-item" >

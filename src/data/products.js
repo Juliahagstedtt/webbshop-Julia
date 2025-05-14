@@ -104,11 +104,11 @@ const products = [
   },
   {
     // id: "12",
-    name: "Barbie Väska & Skor",
+    name: "Barbie Väska & rollers",
     price: 99,
     category: "Kläder & Accessoarer",
     imageUrl: "https://images.unsplash.com/photo-1586260741-3a01f9b9c97c?auto=format&fit=crop&w=600&q=80",
-    description: "En trendig väska och skor för Barbie.",
+    description: "En trendig väska och rullskridskor för Barbie..",
     stock: 10
   },
   {
@@ -131,11 +131,11 @@ const products = [
   },
   {
     // id: "15",
-    name: "Barbie Hatt & Handskar",
+    name: "Barbie Hatt",
     price: 79,
     category: "Kläder & Accessoarer",
     imageUrl: "https://images.unsplash.com/photo-1604936326223-600a7ed0746c?auto=format&fit=crop&w=600&q=80",
-    description: "En fin hatt och matchande handskar för Barbie.",
+    description: "En fin hatt för Barbie.",
     stock: 10
   },
   {
@@ -167,11 +167,11 @@ const products = [
   },
   {
     // id: "19",
-    name: "Barbie Skor & Strumpor",
+    name: "Barbie Skor",
     price: 49,
     category: "Kläder & Accessoarer",
     imageUrl: "https://images.unsplash.com/photo-1591954111090-3c13db6f388b?auto=format&fit=crop&w=600&q=80",
-    description: "En uppsättning skor och strumpor för Barbie.",
+    description: "Barbie skor.",
     stock: 10
   },  {
     // id: "20",

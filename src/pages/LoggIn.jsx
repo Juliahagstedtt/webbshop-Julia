@@ -8,19 +8,17 @@ function LoggIn() {
   // State för att hålla reda på användarnamn och lösenord
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
-
   // State för att hantera felmeddelanden
   const [error, setError] = useState('');
   const [isValid, setIsValid] = useState(null);
-
   // Rätt inloggnings uppgifter för inlogg (Inte klar än!)
-  const correctUsername = 'David'
-  const correctPassword = 'Barbie';
+  const correctUsername = 'admin'
+  const correctPassword = '1234';
   const navigate = useNavigate();
 
   // Validering för lösenord och användarnamn
   const schema = Joi.object({
-    username: Joi.string().min(5).required(),
+    username: Joi.string().min(3).required(),
     password: Joi.string().min(4).required(),
   });
 
@@ -29,7 +27,7 @@ function LoggIn() {
     e.preventDefault();
 
     // Validerar lösenordet enligt Joi-schema
-    const { error: joiError } = schema.validate({ password });
+    const { error: joiError } = schema.validate({ username, password });
     
 
     // Om valideringen misslyckas är de för att lösenordet är för kort
@@ -40,7 +38,7 @@ function LoggIn() {
     }
 
     // Om lösenordet är fel
-    if (password !== correctPassword) {
+    if (username !== correctUsername || password !== correctPassword) {
       setError('Fel lösenord');    // Sätt felmeddelande för fel lösenord
       setIsValid(false);  // Ange att inloggningen är ogiltig
       return;
@@ -49,7 +47,7 @@ function LoggIn() {
     // Om lösenordet är korrekt – logga in användaren
     setError('');  // Ta bort eventuella felmeddelanden
     setIsValid(true);  // Sätt statusen till giltig inloggning
-    navigate('/pages/admin');  // Skicka användaren till admin-sidan
+    navigate('/admin');  // Skicka användaren till admin-sidan
   };
 
   return (
@@ -62,8 +60,8 @@ function LoggIn() {
               className={`input-box ${isValid === true ? 'input-success' : isValid === false ? 'input-error' : ''}`} 
               type="text"  // Användarnamn är textfält
               placeholder="Användarnamn"
-              value={name}  // Håller reda på användarens inmatade namn
-              onChange={(e) => setName(e.target.value)}
+              value={username}  // Håller reda på användarens inmatade namn
+              onChange={(e) => setUserName(e.target.value)}
             />
                {error && <p className="error-inlogg">{error}</p>}  
 
@@ -79,15 +77,16 @@ function LoggIn() {
 
             {error && <p className="error-inlogg">{error}</p>}  
             {/* // Om ett fel finns, visas felmeddelandet */}
-
+  
+  
             <form onSubmit={handleSubmit}>
               <button className="continue">Logga In</button>  
             </form>
 
             {/* Tillfällig logga in-knapp tills jag fixat klar Inlogg, To Do! Inte klar än */}
-            <Link to={"/admin"}>
+            {/* <Link to={"/admin"}>
               <button className="admin-loggin">Logga in</button>
-            </Link>
+            </Link> */}
           
           </section>
         </div>

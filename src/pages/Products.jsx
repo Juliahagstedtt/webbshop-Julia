@@ -11,6 +11,7 @@ function Products() {
     // state variabel. Börjar som en tom lista, men kommer snart innehålla alla produkter från databasen.
     // "setProducts" används för att uppdatera innehållet i Products
     const [products, setProducts] = useState([]);
+    const [counter, setCounter] = useState({});
 
     // useEffect körs automatiskt EN gång när sidan laddas
     // Här används den för att hämta produktdata från Firestore
@@ -34,6 +35,12 @@ function Products() {
         fetchData();
     }, []); // Tom array 
 
+    const handleAddToCart = (product) => {
+        setCounter(prev => ({
+            ...prev,
+            [product.id]: (prev[product.id] || 0 ) + 1
+        }));
+    };
 
     return (
         <>
@@ -56,9 +63,9 @@ function Products() {
                 <div key={product.id} className='products-container'>
                     <h3>{product.name}</h3>
                     <p>{product.price} kr</p>
-                    {product.imageUrl && (
-                    <img src={product.imageUrl} alt={product.description} width="200" />
-                    )}                    
+                    <img src={product.imageUrl} alt={product.description} width="200" height="215" />
+                    <p>{product.description}</p>
+                    
                     {/* Knapp för att lägga till i varukorg */}
                     <button className='shop-icon'>
                         <img 

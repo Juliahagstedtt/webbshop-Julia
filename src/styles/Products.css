@@ -1,7 +1,7 @@
 .products-container {
     /* Ändra till fler kolumer */
     /* display: grid; */
-    padding: 60px;
+    padding: 50px;
     max-width: 500px;
     justify-content: center;
     background-color: rgb(31, 31, 31);
@@ -49,3 +49,4 @@
     margin: 0;
     border-radius: 5px;
 }
+

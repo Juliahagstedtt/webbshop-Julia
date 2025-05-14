@@ -1,0 +1,11 @@
+.Order {
+    background-color: rgba(67, 67, 67, 0.323);
+    width: 300px;
+    height: 300px;
+    margin: 0 auto;
+    border: 2px solid rgb(44, 44, 44);
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+

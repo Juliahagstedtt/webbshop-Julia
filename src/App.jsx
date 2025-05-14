@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Routes, Route } from 'react-router-dom';
 import './App.css'
-import Header from './pages/header'
+import Header from './pages/Header'
 import Products from './pages/Products'
 import Cart from './pages/Cart';
 import Home from './pages/Home';
@@ -11,6 +11,7 @@ import Admin from './pages/Admin';
 import AddNewProduct from './pages/AddNewProduct';
 import { fetchProducts } from './config/firebase';
 import ProductList from "./pages/ProductList";
+import Order from './pages/Order';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
           <Route path="/loggIn" element={<LoggIn />} />
           <Route path='/admin' element={<Admin />} />
           <Route path='/addnewproduct' element={<AddNewProduct />} />
+          <Route path='/order' element={<Order />} />
         </Routes>
         <main>
         </main>
