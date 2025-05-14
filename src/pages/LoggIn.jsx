@@ -38,11 +38,12 @@ function LoggIn() {
     e.preventDefault();
 
     // Validerar lösenordet enligt Joi-schema
-    const { error: error } = schema.validate({ username, password }, { abortEarly: false });
+     const { error: error } = schema.validate({ username, password }, { abortEarly: false });
+
     
     const newFieldErrors = {
       username: !username || username.length < 3 || username !== correctUsername,
-      password: !password || password.length < 3 || passworde !== correctPassword,
+      password: !password || password.length < 3 || password !== correctPassword,
     };
 
     setFieldErrors(newFieldErrors);
@@ -64,31 +65,31 @@ function LoggIn() {
           setPasswordError(detail.message);
           setPasswordValid(false);
         }
-      });  
+      });
       return;
     }
 
 if (username !== correctUsername) {
-  setUsernameError('Fel användarnamn');
-  setUsernameValid(false);
-} else {
-  setUsernameError('');
-  setUsernameValid(true);
-}
+      setUsernameError('Fel användarnamn');
+      setUsernameValid(false);
+    } else {
+      setUsernameError('');
+      setUsernameValid(true);
+    }
 
-if (password !== correctPassword) {
-  setPasswordError('Fel lösenord');
-  setPasswordValid(false);
-} else {
-  setPasswordError('');
-  setPasswordValid(true);
-}
+    if (password !== correctPassword) {
+      setPasswordError('Fel lösenord');
+      setPasswordValid(false);
+    } else {
+      setPasswordError('');
+      setPasswordValid(true);
+    }
 
-  if (username === correctUsername && password === correctPassword) {
-    setFieldErrors({ username: false, password: false });
-  navigate('/admin'); 
-  }
+    if (username === correctUsername && password === correctPassword) {
+      setFieldErrors({ username: false, password: false });
+      navigate('/admin');
  };
+}
 
   return (
     <section className="loggIn dark-theme">
