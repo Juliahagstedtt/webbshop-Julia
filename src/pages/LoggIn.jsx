@@ -9,17 +9,28 @@ function LoggIn() {
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
   // State för att hantera felmeddelanden
-  const [error, setError] = useState('');
-  const [isValid, setIsValid] = useState(null);
+  const [usernameError, setUsernameError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
+  const [usernameValid, setUsernameValid] = useState(null);
+  const [passwordValid, setPasswordValid] = useState(null);
+  const navigate = useNavigate();
+  const [fieldErrors, setFieldErrors] = useState({ username: false, password: false });
+
   // Rätt inloggnings uppgifter för inlogg (Inte klar än!)
   const correctUsername = 'admin'
   const correctPassword = '1234';
-  const navigate = useNavigate();
 
   // Validering för lösenord och användarnamn
   const schema = Joi.object({
-    username: Joi.string().min(3).required(),
-    password: Joi.string().min(4).required(),
+  username: Joi.string().min(5).required().messages({
+    'string.empty': 'Användarnamn krävs',
+    'string.min': 'Minst 5 tecken',
+  }),
+  password: Joi.string().min(4).required().messages({
+    'string.empty': 'Lösenord Krävs',
+    'string.min': 'Minst 4 tecken',
+    }),
   });
 
   // Funktion för när användaren klickar på Logga in
@@ -27,68 +38,93 @@ function LoggIn() {
     e.preventDefault();
 
     // Validerar lösenordet enligt Joi-schema
-    const { error: joiError } = schema.validate({ username, password });
+    const { error: error } = schema.validate({ username, password }, { abortEarly: false });
     
+    const newFieldErrors = {
+      username: !username || username.length < 3 || username !== correctUsername,
+      password: !password || password.length < 3 || passworde !== correctPassword,
+    };
+
+    setFieldErrors(newFieldErrors);
+
+
+    setUsernameError('');
+    setPasswordError('');
+    setUsernameValid(null);
+    setPasswordValid(null);
 
     // Om valideringen misslyckas är de för att lösenordet är för kort
-    if (joiError) {
-      setError('Minst 4 tecken');  // felmeddelande
-      setIsValid(false);  // Anger att inloggningen är ogiltig
+    if (error) {
+      error.details.forEach((detail) => {
+        if (detail.path.includes('username')) {
+          setUsernameError(detail.message);
+          setUsernameValid(false);
+        }
+        if (detail.path.includes('password')) {
+          setPasswordError(detail.message);
+          setPasswordValid(false);
+        }
+      });  
       return;
     }
 
-    // Om lösenordet är fel
-    if (username !== correctUsername || password !== correctPassword) {
-      setError('Fel lösenord');    // Sätt felmeddelande för fel lösenord
-      setIsValid(false);  // Ange att inloggningen är ogiltig
-      return;
-    }
+if (username !== correctUsername) {
+  setUsernameError('Fel användarnamn');
+  setUsernameValid(false);
+} else {
+  setUsernameError('');
+  setUsernameValid(true);
+}
 
-    // Om lösenordet är korrekt – logga in användaren
-    setError('');  // Ta bort eventuella felmeddelanden
-    setIsValid(true);  // Sätt statusen till giltig inloggning
-    navigate('/admin');  // Skicka användaren till admin-sidan
-  };
+if (password !== correctPassword) {
+  setPasswordError('Fel lösenord');
+  setPasswordValid(false);
+} else {
+  setPasswordError('');
+  setPasswordValid(true);
+}
+
+  if (username === correctUsername && password === correctPassword) {
+    setFieldErrors({ username: false, password: false });
+  navigate('/admin'); 
+  }
+ };
 
   return (
     <section className="loggIn dark-theme">
-      <section className='logg-section'>
-        <div className='sign-section'>
-          <section className='form'>
-            <p className='admin'>Användarnamn</p>
+      <section className="logg-section">
+        <div className="sign-section">
+          <form className="form" onSubmit={handleSubmit}>
+            <p className="admin">Användarnamn</p>
             <input
-              className={`input-box ${isValid === true ? 'input-success' : isValid === false ? 'input-error' : ''}`} 
-              type="text"  // Användarnamn är textfält
+              className={`input-box ${
+                fieldErrors.username ? 'input-error' : usernameValid === true ? 'input-success' : ''
+              }`}
+              type="text"
               placeholder="Användarnamn"
-              value={username}  // Håller reda på användarens inmatade namn
+              value={username}
               onChange={(e) => setUserName(e.target.value)}
             />
-               {error && <p className="error-inlogg">{error}</p>}  
+            {usernameError && <p className="error-inlogg">{usernameError}</p>}
 
-
-            <p className='admin'>Lösenord</p>
+            <p className="admin">Lösenord</p>
             <input
-              className={`input-box ${isValid === true ? 'input-success' : isValid === false ? 'input-error' : ''}`} 
-              type="password"  // Lösenord är dold
+              className={`input-box ${
+                passwordValid === true
+                  ? 'input-success'
+                  : passwordValid === false
+                  ? 'input-error'
+                  : ''
+              }`}
+              type="password"
               placeholder="Lösenord"
-              value={password}  
+              value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
+            {passwordError && <p className="error-inlogg">{passwordError}</p>}
 
-            {error && <p className="error-inlogg">{error}</p>}  
-            {/* // Om ett fel finns, visas felmeddelandet */}
-  
-  
-            <form onSubmit={handleSubmit}>
-              <button className="continue">Logga In</button>  
-            </form>
-
-            {/* Tillfällig logga in-knapp tills jag fixat klar Inlogg, To Do! Inte klar än */}
-            {/* <Link to={"/admin"}>
-              <button className="admin-loggin">Logga in</button>
-            </Link> */}
-          
-          </section>
+            <button className="continue">Logga In</button>
+          </form>
         </div>
       </section>
     </section>

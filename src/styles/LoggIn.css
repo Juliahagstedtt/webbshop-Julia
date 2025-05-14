@@ -1,4 +1,3 @@
-
 main {
     background-color: black;
 }
@@ -40,20 +39,17 @@ main {
   
   .input-error {
     border: 2px solid red;
-    background-color: #ffe5e5;
-    text-shadow: 2px 2px 4px solid black;
-    color: black;
+    background-color: #f6dcdc;
+    color: rgb(0, 0, 0);
   }
   
   .error {
     color: red;
-    text-shadow: 2px 2px 4px solid black;
     margin-top: -23px;
   }
   
   .error-inlogg {
     color: red;
-    text-shadow: 2px 2px 4px solid black;
   }
   
   .success {
@@ -66,13 +62,13 @@ main {
     background-color: #e5ffe5;
     color: black;
   }
-    
   
+
   .admin {
     color: rgb(255, 255, 255);
-    /* font-style: italic; */
+    font-style: italic;
     font-size: 19px;
-    /* margin-bottom: 4px; */
+    margin-bottom: 4px;
     margin-right: 260px;
   }
 
@@ -85,6 +81,7 @@ main {
     border-radius: 9px;
     width: 100px;
     cursor: pointer;
+    margin-bottom: 30px;
   }
 
   .loggout-button:hover {
