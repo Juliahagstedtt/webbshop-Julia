@@ -3,11 +3,12 @@ import { Link } from 'react-router-dom';
 import { useCartStore } from '../data/cartStore';
 
 function Cart() {
-    const cart = useCartStore((state) => state.cart) || [];
+    const cart = useCartStore((state) => state.items) || [];
     const addToCart = useCartStore((state) => state.addToCart);
     const removeFromCart = useCartStore((state) => state.removeFromCart);
     
     const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
+    
 
     return(
         <>
@@ -21,7 +22,7 @@ function Cart() {
                
         
         <div className='cart-items' key={item.id}>
-            <p>{item.name}..................{item.price} kr</p>
+            <p>{item.name}..................{item.price * item.quantity}kr</p>
             <button className='increase' onClick={() => addToCart(item)}>+</button>
             <p>{item.quantity} st</p>
             <button className='decrease' onClick={() => removeFromCart(item)}>-</button>

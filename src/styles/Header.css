@@ -40,4 +40,16 @@ button img:hover {
     background-color: purple;
     position: absolute;
     top: 5px;
+    padding: 4px 8px;
+
+}
+
+.cart {
+    background: none;
+    position: relative;
+}
+
+.shopcart {
+position: relative;
+display: block;
 }

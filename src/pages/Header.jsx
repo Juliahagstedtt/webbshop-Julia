@@ -20,13 +20,16 @@ const cartCount = (cartItems || []).reduce((acc, item) => acc + item.quantity, 0
                 </Link>
 
             {/* <input type="serch" placeholder="sök" className='serch'></input> */}
-
+            
+            <div className='shop-cart'>
                 <Link to="/cart">
                 <button className='cart'>
                     <img src={cartIcon} alt="cart-icon" className="cart-icon"/>
-                    {cartCount > 0 && <span className="cart-counter">{cartCount}</span>}
+                    {<span className="cart-counter">{cartCount}</span>}
+
                 </button>
                 </Link>
+            </div>
             </nav>
         </header>
     );
