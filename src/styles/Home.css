@@ -1,25 +1,46 @@
 .home-text {
-    margin-bottom: 70px;
-    margin-top: 10px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.home-container {
+  max-width: 900px;
+  margin: 50px auto;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 40px;
+  background-color: #373838c0;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px #FF3499;
 }
 
 .barbi-img1 {
-    max-width: 300px;
-    margin: 50px;
-    margin-left: 10px;
+  width: 400px;
+  /* height: auto; */
+  border-radius: 15px;
+  box-shadow: 0 6px 12px #FF3499;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+.barbi-img1:hover {
+    transform: scale(1.05); 
 }
 
 .home-info {
-    background-color: #45424364;
-    width: 300px;
+    background-color: #45424313;
+    /* width: 300px; */
+    margin: 20px auto;
     padding: 30px;
     color: #ffffff;
-    margin: 20px auto; 
     border-radius: 15px;
     font-size: 18px;
     font-style: italic;
-    text-align: center; 
-  }
+    text-align: center;
+    margin-top: -35px;
+}
 
 .product-button {
     background-color: #FF3499;
@@ -27,28 +48,34 @@
     border: none;
     padding: 10px;
     border-radius: 9px;
-    font-size: 16px;}
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
 
+.product-button:hover {
+    background-color: #e52e88;
+}
 
 @media (max-width: 320px) {
     .barbi-img1 {
         max-width: 90%;
         margin: 20px auto;
-        display: block;
-      }
+    }
 
     .home-info {
-      width: 90%;
-      padding: 20px;
-      font-size: 16px;
+        width: 90%;
+        padding: 20px;
+        font-size: 16px;
     }
+
     .home-text {
         font-size: 23px;
-        text-align: center;
-      }
-    
-      .product-button {
-        width: 50%;
-        font-size: 16px;
-      }
     }
+
+    .product-button {
+        width: 100%;
+        font-size: 16px;
+    }
+}

@@ -36,12 +36,13 @@ button img:hover {
 }
 
 .cart-counter {
-    color: #00a6ff;
-    background-color: purple;
+    color: #FF3499;
+    background-color: #ffffff;
     position: absolute;
     top: 5px;
     padding: 4px 8px;
-
+    box-shadow: 0 4px 8px #FF3499;
+    border-radius: 50%;
 }
 
 .cart {

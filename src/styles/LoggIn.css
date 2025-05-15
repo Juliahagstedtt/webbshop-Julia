@@ -66,7 +66,7 @@ main {
 
   .admin {
     color: rgb(255, 255, 255);
-    font-style: italic;
+    /* font-style: italic; */
     font-size: 19px;
     margin-bottom: 4px;
     margin-right: 260px;
@@ -88,30 +88,8 @@ main {
     background-color: #ff87c3;
   }
   
-  @media (max-width: 480px) {
-    .sign-section {
-      width: 300px;
-      margin: 20px auto;
-      padding: 20px;
-    }
   
-    .input-box {
-      width: 90%;
-      /* margin-left: -5px; */
-    }
-  
-    .ghost-button {
-      width: 150px;
-    }
-  
-    .blurp {
-      height: auto;
-      padding: 20px;
-      background-size: cover;
-    }
-  }
-  
-  @media (min-width: 481px) and (max-width: 900px) {
+  @media (min-width: 320px) {
     .sign-section {
       width: 400px;
       margin: 30px auto;
@@ -132,7 +110,6 @@ main {
   @media (min-width: 1100px) {
     .sign-section {
       width: 400px;
-      /* margin-left: 100px; */
     }
   
     .blurp {
@@ -143,8 +120,8 @@ main {
 
   
   .admin {
-    color: lightgray;
-    font-style: italic;
+    color: rgb(255, 255, 255);
+    /* font-style: italic; */
     font-size: 19px;
     margin-bottom: 4px;
   }

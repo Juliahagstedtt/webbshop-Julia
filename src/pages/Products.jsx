@@ -104,18 +104,19 @@ const addToCart = useCartStore((state) => state.addToCart);
             {filteredAndSortedProducts.map((product) => (
                 <div key={product.id} className='products-container'>
                     <h3>{product.name}</h3>
-                    <p>{product.price} kr</p>
-                    <img src={product.imageUrl} alt={product.description} width="200" height="215" />
+                    <img className="product-img" src={product.imageUrl} alt={product.description} width="200" height="190" />
                     <p>{product.description}</p>
+                    <p>{product.price} kr</p>
                     
                     {/* Knapp för att lägga till i varukorg */}
                     <button className='shop-icon' onClick={() => addToCart(product)}>
-                        <img 
+                        {/* <img 
                             src={shopIcon} 
                             alt="shop-icon" 
                             className="shop-icon" 
                             
-                        />
+                        /> */}
+                        Lägg Till
                     </button>
                     </div>
                

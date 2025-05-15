@@ -24,6 +24,16 @@ export const useCartStore = create((set) => ({
       }
     }),
 
+    decreaseQuantity: (id) =>
+      set((state) => ({
+        items: state.items
+        .map((item) =>
+        item.id === id
+        ? { ...item, quantity: Math.max (item.quantity - 1, 0) } : item
+        )
+        .filter((item) => item.quantity > 0),
+      })),
+
 
   removeFromCart: (productId) => set((state) => ({
     items: state.items.filter(item => item.id !== productId),

@@ -8,9 +8,7 @@ function Order() {
     <>
     <div className='Order'>
         <h2>Tack för din beställning!</h2>
-        <p> Ordernummer: </p>  
-    
-    
+        
     <Link to={"/"}>
         <button className="continue">Fortsätt</button>
     </Link>   
