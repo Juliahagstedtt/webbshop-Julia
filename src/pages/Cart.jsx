@@ -21,8 +21,9 @@ function Cart() {
                
         
         <div className='cart-items' key={item.id}>
-            <p>{item.name}...........................{item.price} Kr</p>
+            <p>{item.name}..................{item.price} kr</p>
             <button className='increase' onClick={() => addToCart(item)}>+</button>
+            <p>{item.quantity} st</p>
             <button className='decrease' onClick={() => removeFromCart(item)}>-</button>
         </div>
                 ))

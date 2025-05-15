@@ -6,6 +6,8 @@ import '../styles/Products.css'
 import shopIcon from '../assets/shopIcon.svg';
 // import useProductStore from "../data/ProductStore"; 
 import { useStore } from 'zustand';
+import { useCartStore } from '../data/cartStore';
+
 
 function Products() {
     const [products, setProducts] = useState([]);
@@ -13,6 +15,7 @@ function Products() {
     const [sortOption, setSortOption] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
 
+    const addToCart = useCartStore((state) => state.addToCart);
     // useEffect körs automatiskt EN gång när sidan laddas
     // Här används den för att hämta produktdata från Firestore
     useEffect(() => {
@@ -87,7 +90,7 @@ function Products() {
                 <option value="price-desc">Pris högt till lågt</option>
             </select>
 
-            <h1>Välkommen till Produktsidan!</h1>
+            <h1 className='welcome-product'>Välkommen till Produktsidan!</h1>
         <div className='products'>
             {/* Renderar varje produkt */}
             {filteredAndSortedProducts.map((product) => (
@@ -98,7 +101,7 @@ function Products() {
                     <p>{product.description}</p>
                     
                     {/* Knapp för att lägga till i varukorg */}
-                    <button className='shop-icon' onClick={() => handleAddToCart(product)}>
+                    <button className='shop-icon' onClick={() => addToCart(product)}>
                         <img 
                             src={shopIcon} 
                             alt="shop-icon" 

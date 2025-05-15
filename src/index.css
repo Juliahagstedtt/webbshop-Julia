@@ -24,6 +24,12 @@ body {
   height: 100%;
 }
 
+main {
+  height: 100%;
+  background-color: #131313f4;
+
+}
+
 .continue {
   background-color: #FF3499;
   color: white;

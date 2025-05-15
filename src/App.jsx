@@ -18,6 +18,7 @@ function App() {
     <>
       <div>
         <Header />
+        <main>
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/Cart' element={<Cart />} />
@@ -27,7 +28,7 @@ function App() {
           <Route path='/addnewproduct' element={<AddNewProduct />} />
           <Route path='/order' element={<Order />} />
         </Routes>
-        <main>
+        
         </main>
         <Footer />
       </div>
