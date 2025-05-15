@@ -23,13 +23,14 @@ input {
 }
 
   .add-new {
-    background-color: rgb(72, 72, 72);
+    background-color: rgb(43, 43, 43);
     border-radius: 10px;
     margin: 0 auto;   
     width: 300px;   
-    height: 400px;
+    height: 500px;
     text-align: center;        
     padding: 30px;
+    box-shadow: 0 6px 12px #FF3499;
   }
 
 .add-button {
@@ -40,6 +41,8 @@ input {
     border-radius: 9px;
     width: 150px;
     margin-top: 10px;
+    margin: 0 auto;
+    margin-top: 20px;
 }
 
 .error {

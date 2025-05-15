@@ -20,7 +20,7 @@ function Admin() {
     const [editId, setEditId] = useState(null);
     // Innehåller de redigerade värdena för produktfält
     const [editValues, setEditValues] = useState({
-      name: "", description: "", price: "", image: ""
+      title: "", description: "", price: "", imageUrl: "", category: ""
     });
   
     // Hämtar alla produkter från Firestore när sidan laddas
@@ -59,16 +59,22 @@ function Admin() {
     const handleEditClick = (product) => {
       setEditId(product.id); // visar vilken produkt som redigeras
       setEditValues({ 
-        title: product.name, 
+        title: product.title, 
         description: product.description, 
-        price: product.price, 
-        image: product.image 
+        price: product.price?.toString() || "",
+        imageUrl: product.imageUrl,
+        category: product.category || "" 
       });
     };
   
     // Uppdaterar inputfält när man skriver i dem
     const handleInputChange = (e) => {
-      setEditValues({ ...editValues, [e.target.name]: e.target.value });
+      const { name, value } = e.target;
+
+      setEditValues(prev => ({
+      ...prev,
+      [name]: value 
+      }));
     }
   
     // Sparar ändringar till firestore och uppdaterar listan
@@ -79,22 +85,22 @@ function Admin() {
       await updateDoc(docRef, {
         title: editValues.title,
         description: editValues.description,
-        price: editValues.price,
+        price: Number(editValues.price),
+        imageUrl: editValues.imageUrl || "",
+        category: editValues.category
       });
   
-      // Uppdaterar produkten lokalt
-      setProducts((prev) => 
-        prev.map((product) => 
-          product.id === id ? { ...product, ...editValues } : product
-        )
-      );
-  
-      // Ändrar även originalprodukterna
-      setOriginalProducts((prev) =>
-        prev.map((product) => 
-          product.id === id ? { ...product, ...editValues } : product
-        )
-      );
+      setProducts((prev) =>
+      prev.map((product) =>
+        product.id === id ? { ...product, ...editValues, price: Number(editValues.price) } : product
+      )
+    );
+
+    setOriginalProducts((prev) =>
+      prev.map((product) =>
+        product.id === id ? { ...product, ...editValues } : product
+      )
+    );
   
       setEditId(null); // avslutar redigeringsläge
     };
@@ -135,17 +141,45 @@ function Admin() {
               {editId === product.id ? (
                 // Vid redigering visas inputfält
                 <>
-                  <input name="name"  value={editValues.name} onChange={handleInputChange}/>
-                  <input name="description"  value={editValues.name} onChange={handleInputChange}/>
-                  <input name="price"  value={editValues.name} onChange={handleInputChange} />
-                  <input name="image" value={editValues.name} onChange={handleInputChange}/>
+                  <input 
+                  name="title"  
+                  value={editValues.title} 
+                  onChange={handleInputChange}/>
+
+                  <input 
+                  name="category" 
+                  value={editValues.category} 
+                  onChange={handleInputChange} />
+
+
+                  <input 
+                  name="description"  
+                  value={editValues.description} 
+                  onChange={handleInputChange}/>
+
+                  <input 
+                  name="price"  
+                  type="number"
+                  value={editValues.price} 
+                  onChange={handleInputChange} />
+
+                  <input 
+                  type="text"
+                  name="imageUrl"
+                  value={editValues.imageUrl} 
+                  onChange={handleInputChange}
+                />
+
                   <button className="add-button" onClick={() => handleSave(product.id)}>Spara</button>
                 </>
               ) : (
                 <>
                   <p>{product.name}</p>
+                  <p className="category">{product.category}</p>                  
                   <p>{product.description}</p>
                   <p>{product.price} kr</p>
+
+
   
                   {/* Ta bort-produkt-knapp */}
                   <button className='trashcan' onClick={() => handleRemove(product.id)}>

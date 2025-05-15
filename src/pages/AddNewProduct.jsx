@@ -24,18 +24,22 @@ const schema = Joi.object({
         "number.min": "Priset måste vara minst 1 siffra",
         "any.required": "Pris krävS"
     }),
-    image: Joi.string().min(2).required().messages({
+    imageUrl: Joi.string().uri().required().messages({
         "string.empty": "Bild-URL krävs",
         "string.uri": "URL måste vara en giltig länk"
+    }),
+    category: Joi.string().min(2).required().messages({
+      "string.empty": "Kategori krävs",
+      "string.min": "Kategori måste vara minst 2 tecken"
     })
-
 });
 function AddNewProduct() {
     const [formData, setFormData] = useState({
         title: "",
         description: "",
         price: "",
-        image: ""
+        imageUrl: "",
+        category: ""
     });
 
     const [errors, setErrors] = useState({}); // Valideringsfel
@@ -46,10 +50,16 @@ const handleChange = (e) => {
         ...prev,
         [e.target.name]: e.target.value 
     }));
+  setErrors(prev => ({
+    ...prev,
+    [e.target.name]: ""
+  }));
 };
 
 
-const handleSubmit = async () => {
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
     const validation = schema.validate(formData, { abortEarly: false });
     if (validation.error) {
         // Vid fel, samla alla fel och visa dem
@@ -83,7 +93,7 @@ return (
         <button className="admin-button">Lägg till Produkt</button>
       </Link>
 
-      <div className="add-new">
+      <form className="add-new">
         <input
           name="title"
           placeholder="Titel"
@@ -92,13 +102,13 @@ return (
         />
         {errors.title && <p className="error">{errors.title}</p>}
 
-        {/* <input
-          name="category"
-          placeholder="Kategori"
-          value={formData.category}
-          onChange={handleChange}
-        />
-        {errors.category && <p className="error">{errors.category}</p>} */}
+        <input
+        name="category"
+        placeholder="Kategori"
+        value={formData.category}
+        onChange={handleChange}
+      />
+      {errors.category && <p className="error">{errors.category}</p>}
 
         <input
           name="description"
@@ -109,8 +119,8 @@ return (
         {errors.description && <p className="error">{errors.description}</p>}
 
         <input
-          name="price"
           type="number"
+          name="price"
           placeholder="Pris"
           value={formData.price}
           onChange={handleChange}
@@ -118,17 +128,17 @@ return (
         {errors.price && <p className="error">{errors.price}</p>}
 
         <input
-          name="image"
+          type="url"
+          name="imageUrl"
           placeholder="Bild-URL"
-          value={formData.image}
+          value={formData.imageUrl}
           onChange={handleChange}
         />
-        {errors.image && <p className="error">{errors.image}</p>}
+        {errors.imageUrl && <p className="error">{errors.imageUrl}</p>}
 
-        <button className="add-button" onClick={handleSubmit}>
-          Lägg till produkt
+        <button className="add-button" onClick={handleSubmit}>Lägg till produkt
         </button>
-      </div>
+      </form>
     </div>
   );
 }

@@ -67,3 +67,9 @@
     font-size: 0.9rem;
     margin: 4px 0 8px;
   }
+
+  .category {
+    font-weight: bold;
+    font-style: italic;
+    color: #FF3499;
+  }
