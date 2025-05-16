@@ -46,11 +46,13 @@ const addToCart = useCartStore((state) => state.addToCart);
 
     
     const handleAddToCart = (product) => {
-        setCounter(prev => ({
-            ...prev,
-            [product.id]: (prev[product.id] || 0 ) + 1
-        }));
-};    
+    setCounter(prev => ({
+        ...prev,
+        [product.id]: (prev[product.id] || 0) + 1
+    }));
+    addToCart(product);
+    console.log(`${product.name || "Okänd produkt"} har lagts till i varukorgen.`);
+};   
 
     const filteredAndSortedProducts = [...products]
         .filter(product => 
@@ -60,9 +62,9 @@ const addToCart = useCartStore((state) => state.addToCart);
         .sort((a, b) => {
             switch (sortOption) {
                 case "name-asc":
-                    return a.name.localeCompare(b.name);
+                    return (a?.name || '').localeCompare(b?.name || '');
                 case "name-desc":
-                    return b.name.localeCompare(a.name);
+                    return (b?.name || '').localeCompare(a?.name || '');                
                 case "price-asc":
                     return a.price - b.price;
                 case "price-desc":
@@ -109,14 +111,11 @@ const addToCart = useCartStore((state) => state.addToCart);
                     <p>{product.price} kr</p>
                     
                     {/* Knapp för att lägga till i varukorg */}
-                    <button className='shop-icon' onClick={() => addToCart(product)}>
-                        {/* <img 
-                            src={shopIcon} 
-                            alt="shop-icon" 
-                            className="shop-icon" 
-                            
-                        /> */}
-                        Lägg Till
+                    <button 
+                    className='shop-icon' 
+                    onClick={() => handleAddToCart(product)}
+                    >
+                    Lägg Till
                     </button>
                     </div>
                

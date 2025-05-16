@@ -1,6 +1,5 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore } from "firebase/firestore";
-
+import { getFirestore, collection, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { getAnalytics } from "firebase/analytics";
 
 const firebaseConfig = {
@@ -18,13 +17,21 @@ const analytics = getAnalytics(app);
 const db = getFirestore(app);
 
 export async function fetchProducts() {
-    const productsCol = collection(db, "products");
-    const snapshot = await getDocs(productsCol);
-    return snapshot.docs.map(doc => ({
-      id: doc.id,
-      ...doc.data()
-    }));
-  }
+  const productsCol = collection(db, "products");
+  const snapshot = await getDocs(productsCol);
+  return snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data()
+  }));
+}
 
+export async function deleteProductFromFirestore(id) {
+  try {
+    await deleteDoc(doc(db, "products", id));
+  } catch (error) {
+    console.error("Misslyckades att radera produkt", error);
+    throw error;
+  }
+}
 
 export { db };

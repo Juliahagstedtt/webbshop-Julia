@@ -49,7 +49,10 @@ function Cart() {
                     <h3 className='total'>Totalt: {total} kr</h3>
                 </div>
 
-                    <button className="order" onClick={handleOrder}>Beställ</button>
+                <button className="order"   onClick={() => {
+                handleOrder();
+                console.log("Beställning har skickats!") }}
+                >Beställ</button>
 
         </div>
         </>

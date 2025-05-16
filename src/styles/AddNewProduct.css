@@ -31,7 +31,12 @@ input {
     text-align: center;        
     padding: 30px;
     box-shadow: 0 6px 12px #FF3499;
+    cursor: pointer;
   }
+
+ .add-button:hover {
+  background-color: #ff90c7;
+ } 
 
 .add-button {
     background-color: #FF3499;

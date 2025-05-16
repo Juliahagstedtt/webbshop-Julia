@@ -7,14 +7,10 @@ import Joi from "joi";
 
 // validering för formulär i lägg till ny produkt
 const schema = Joi.object({
-    title: Joi.string().min(2).required().messages({
+    name: Joi.string().min(2).required().messages({
         "string.empty": "Namn på produkt krävs",
         "string.min": "Produktnamnet måste vara minst 4 tecken"
     }),
-    // category: Joi.object().min(3).required().message({
-    //     "object.empty": "Välj kategori",
-    //     "object.min": "Vänligen välj en kategori"
-    // }),
     description: Joi.string().min(5).required().messages({
         "string.empty": "Beskrivning krävs",
         "string.min":  "Beskrivning måste vara minst 5 tecken"
@@ -35,7 +31,7 @@ const schema = Joi.object({
 });
 function AddNewProduct() {
     const [formData, setFormData] = useState({
-        title: "",
+        name: "",
         description: "",
         price: "",
         imageUrl: "",
@@ -95,12 +91,12 @@ return (
 
       <form className="add-new">
         <input
-          name="title"
+          name="name"
           placeholder="Titel"
-          value={formData.title}
+          value={formData.name}
           onChange={handleChange}
         />
-        {errors.title && <p className="error">{errors.title}</p>}
+        {errors.name && <p className="error">{errors.name}</p>}
 
         <input
         name="category"
@@ -136,7 +132,12 @@ return (
         />
         {errors.imageUrl && <p className="error">{errors.imageUrl}</p>}
 
-        <button className="add-button" onClick={handleSubmit}>Lägg till produkt
+        <button className="add-button" onClick={(e) => {
+          handleSubmit(e);
+          
+          console.log("Nya produkten har lagts till!");
+        }}>
+          Lägg till produkt
         </button>
       </form>
     </div>

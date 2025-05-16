@@ -1,12 +1,18 @@
-// import create from 'zustand';
+import { create } from "zustand";
+import { deleteProductFromFirestore } from "../config/firebase";
 
-// const useProductStore = create((set) => ({
-//   products: [],
-//   fetchProducts: async () => {
-//     const response = await fetch('/api/products');
-//     const data = await response.json();
-//     set({ products: data });
-//   },
-// }));
+export const useProductStore = create((set) => ({
+  products: [],
+  setProducts: (products) => set({ products }),
 
-// export default useProductStore;
+  removeProduct: async (id) => {
+    try {
+      await deleteProductFromFirestore(id);
+      set((state) => ({
+        products: state.products.filter(product => product.id !== id)
+      }));
+    } catch (error) {
+      console.error("Could not remove product:", error);
+    }
+  }
+}));

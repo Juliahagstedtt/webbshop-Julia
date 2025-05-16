@@ -72,7 +72,6 @@ main {
     margin-right: 260px;
   }
 
-
   .loggout-button {
     background-color: #FF3499;
     color: white;
@@ -91,7 +90,7 @@ main {
   
   @media (min-width: 320px) {
     .sign-section {
-      width: 400px;
+      width: 300px;
       margin: 30px auto;
     }
   
@@ -106,22 +105,4 @@ main {
       height: 500px;
     }
   }
-  
-  @media (min-width: 1100px) {
-    .sign-section {
-      width: 400px;
-    }
-  
-    .blurp {
-      height: 500px;
-      background-size: cover;
-    }
-  }
 
-  
-  .admin {
-    color: rgb(255, 255, 255);
-    /* font-style: italic; */
-    font-size: 19px;
-    margin-bottom: 4px;
-  }

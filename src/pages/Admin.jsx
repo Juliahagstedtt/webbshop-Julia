@@ -1,3 +1,4 @@
+import { useProductStore } from '../data/ProductStore';  
 import { Link } from "react-router-dom";
 import '../styles/Admin.css'
 import TrashCan from '../assets/TrashCan.png';
@@ -13,14 +14,19 @@ import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
 
 function Admin() {
     // Lista över produkter
-    const [products, setProducts] = useState([]);
+
+  const [products, setProducts] = useState([]);
+
+    
+  console.log("Typ av products:", typeof products);
+  console.log("Innehåll i products:", products)
     // Ursprunglig produktlista (används för återställning)
     const [originalProducts, setOriginalProducts] = useState([]);
     // Håller reda på vilken produkt som redigeras just nu
     const [editId, setEditId] = useState(null);
     // Innehåller de redigerade värdena för produktfält
     const [editValues, setEditValues] = useState({
-      title: "", description: "", price: "", imageUrl: "", category: ""
+      name: "", description: "", price: "", imageUrl: "", category: ""
     });
   
     // Hämtar alla produkter från Firestore när sidan laddas
@@ -59,7 +65,7 @@ function Admin() {
     const handleEditClick = (product) => {
       setEditId(product.id); // visar vilken produkt som redigeras
       setEditValues({ 
-        title: product.title, 
+        name: product.name, 
         description: product.description, 
         price: product.price?.toString() || "",
         imageUrl: product.imageUrl,
@@ -82,13 +88,22 @@ function Admin() {
       const docRef = doc(db, "products", id); 
   
       // Uppdaterar värden i firestore
-      await updateDoc(docRef, {
-        title: editValues.title,
+      const updateProduct = {
+        name: editValues.name,
         description: editValues.description,
         price: Number(editValues.price),
         imageUrl: editValues.imageUrl || "",
         category: editValues.category
-      });
+      };
+
+      const newProduct = {
+        name: nameInput,            
+        price: Number(priceInput), 
+        imageUrl: imageUrlInput,   
+        description: descriptionInput || "",
+      };
+
+      await updateDoc(docRef, updateProduct);
   
       setProducts((prev) =>
       prev.map((product) =>
@@ -116,7 +131,8 @@ function Admin() {
       setOriginalProducts(productList);
       setEditId(null); // avslutar redigering
     };
-  
+  console.log("products i Admin:", products);
+
     return (
       <div>
         {/* Knapp till admin-sidan */}
@@ -142,30 +158,35 @@ function Admin() {
                 // Vid redigering visas inputfält
                 <>
                   <input 
-                  name="title"  
-                  value={editValues.title} 
+                  name="name"  
+                  value={editValues.name} 
+                  placeholder='Namn'
                   onChange={handleInputChange}/>
 
                   <input 
                   name="category" 
                   value={editValues.category} 
+                  placeholder='kategori'
                   onChange={handleInputChange} />
 
 
                   <input 
                   name="description"  
                   value={editValues.description} 
+                  placeholder='beskrivning'
                   onChange={handleInputChange}/>
 
                   <input 
                   name="price"  
                   type="number"
+                  placeholder='pris'
                   value={editValues.price} 
                   onChange={handleInputChange} />
 
                   <input 
                   type="text"
                   name="imageUrl"
+                  placeholder='Bild_URL'
                   value={editValues.imageUrl} 
                   onChange={handleInputChange}
                 />
