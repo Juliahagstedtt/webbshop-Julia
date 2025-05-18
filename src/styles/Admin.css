@@ -79,3 +79,13 @@
     margin-top: 70px;
     /* margin-bottom: -560px; */
   }
+
+  .admin-input, .select-adminpage {
+    background-color: white;
+    color: black;
+    padding: 7px;
+    margin-top: 5px;
+    border-radius: 5px;
+}
+
+  

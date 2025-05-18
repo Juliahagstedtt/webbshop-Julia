@@ -90,7 +90,7 @@ return (
       </Link>
 
       <form className="add-new">
-        <input
+        <input className="add-P-input"
           name="name"
           placeholder="Titel"
           value={formData.name}
@@ -98,21 +98,22 @@ return (
         />
         {errors.name && <p className="error">{errors.name}</p>}
 
-        <label htmlFor="category">Kategori</label>
-          <select
+          <select className="add-P-input"
             id="category"
-            value={category}
-            onChange={(e) => setCategory(e.target.value)}
+            name="category"
+            value={formData.category}
+            onChange={handleChange}
             required
           >
-            <option value="">Välj kategori</option>
+            <option className="add-P-input"
+            value="">Välj kategori</option>
             <option value="Dockor">Dockor</option>
             <option value="Kläder & Accessoarer">Kläder & Accessoarer</option>
             <option value="Barbie Livsstil">Barbie Livsstil</option>
           </select>
       {errors.category && <p className="error">{errors.category}</p>}
 
-        <input
+        <input className="add-P-input"
           name="description"
           placeholder="Beskrivning"
           value={formData.description}
@@ -120,7 +121,7 @@ return (
         />
         {errors.description && <p className="error">{errors.description}</p>}
 
-        <input
+        <input className="add-P-input"
           type="number"
           name="price"
           placeholder="Pris"
@@ -129,7 +130,7 @@ return (
         />
         {errors.price && <p className="error">{errors.price}</p>}
 
-        <input
+        <input className="add-P-input"
           type="url"
           name="imageUrl"
           placeholder="Bild-URL"

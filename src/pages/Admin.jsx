@@ -16,7 +16,7 @@ import Joi from 'joi';
 // TO DO! Validera ändra 
 
 function Admin() {
-  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+const [isLoggedInState, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
   const navigate = useNavigate();
 
  // Lista över produkter
@@ -141,13 +141,24 @@ function Admin() {
     };
   
 
+    const handleLogin = (e) => {
+      e.preventDefault();
+
+      if (userName === 'admin' && password === 'admin') {
+        setIsLoggedIn(true);
+        localStorage.setItem('isLoggedIn', 'true');
+        navigate('/admin'); 
+      } else {
+        setError('Fel användare eller lösenord');
+      }
+    };
 
     const handleLogout = () => {
       localStorage.setItem('isLoggedIn', 'false');
       // setIsLoggedIn(false);
       navigate('/loggIn');
     };
-    if (!isLoggedIn) {
+    if (!isLoggedInState) {
       navigate('/loggIn');
       return null;
     }
@@ -232,9 +243,9 @@ function Admin() {
 {error.name && <p className="error">{error.name}</p>}
 
 
-                  <label className="admin-input"
-                  htmlFor="category">Kategori</label>
-                    <select
+                  {/* <label className="admin-input"
+                  htmlFor="category">Kategori</label> */}
+                    <select className="select-adminpage"
                       id="category"
                       value={editValues.category}
                       onChange={handleInputChange}
