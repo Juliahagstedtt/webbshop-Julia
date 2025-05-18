@@ -88,4 +88,20 @@
     border-radius: 5px;
 }
 
+  .edit.inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 300px;
+    margin: 0 auto;
+  }
+
   
+.edit-inputs input, .select-adminpage {
+  width: 100%;
+  padding: 8px 12px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  box-sizing: border-box;
+}

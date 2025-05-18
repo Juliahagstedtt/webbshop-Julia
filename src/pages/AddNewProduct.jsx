@@ -139,7 +139,8 @@ return (
         />
         {errors.imageUrl && <p className="error">{errors.imageUrl}</p>}
 
-        <button className="add-button" onClick={(e) => {
+        <button className="add-button" 
+        onClick={(e) => {
           handleSubmit(e);
           
           console.log("Nya produkten har lagts till!");

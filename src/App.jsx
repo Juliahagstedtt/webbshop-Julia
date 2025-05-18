@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import PrivateRoute from "./pages/PrivateRoute";
+import { useState, useEffect } from 'react'
 import { Routes, Route } from 'react-router-dom';
 import './App.css'
 import Header from './pages/Header'
@@ -14,6 +15,17 @@ import ProductList from "./pages/ProductList";
 import Order from './pages/Order';
 
 function App() {
+  const [currentUser, setCurrentUser] = useState(null);
+
+  useEffect(() => {
+  const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+  if (isLoggedIn) {
+    setCurrentUser({ username: 'admin' }); 
+  } else {
+    setCurrentUser(null);
+  }
+}, []);
+
   return (
     <>
       <div className="page-wrapper">
@@ -24,8 +36,14 @@ function App() {
             <Route path='/Cart' element={<Cart />} />
             <Route path='/Products' element={<Products />} />
             <Route path="/loggIn" element={<LoggIn />} />
+
+
+        <Route element={<PrivateRoute currentUser={currentUser} />}>
             <Route path='/admin' element={<Admin />} />
             <Route path='/addnewproduct' element={<AddNewProduct />} />
+        </Route> 
+
+
             <Route path='/order' element={<Order />} />
           </Routes>
         </main>

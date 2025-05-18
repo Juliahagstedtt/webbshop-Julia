@@ -106,7 +106,7 @@ const addToCart = useCartStore((state) => state.addToCart);
             {filteredAndSortedProducts.map((product) => (
                 <div key={product.id} className='products-container'>
                     <h3>{product.name}</h3>
-                    <img className="product-img" src={product.imageUrl} alt={product.description} width="200" height="190" />
+                    <img className="product-img" src={product.imageUrl} alt={product.description} width="140" height="155" />
                     <p>{product.description}</p>
                     <p>{product.price} kr</p>
                     

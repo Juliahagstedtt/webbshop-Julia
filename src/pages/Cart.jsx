@@ -33,15 +33,25 @@ function Cart() {
                
         
         <div className='cart-items' key={item.id}>
-            <p>{item.name}</p>
-            <button className='increase' onClick={() => addToCart(item)}>+</button>
-            <p>{item.quantity} st</p>
-            <button className='decrease' onClick={() => {
-                console.log("Klickade minska för:", item.id);
-                decreaseQuantity(item.id);
-            }}>-</button>            
-            <p>{item.price * item.quantity}kr</p>
+            <div className="cart-name">{item.name}</div>
 
+        <div className="In-De-wrapper">
+            <button 
+            className='decrease' 
+            onClick={() => {
+            console.log("Klickade minska för:", item.id);
+                decreaseQuantity(item.id);
+            }}>-</button>             
+            <p>{item.quantity} st</p>
+            <button 
+            className='increase' 
+            onClick={() => {
+            console.log("Tryckte + på:", item); 
+            addToCart(item);}}
+            >+</button>
+        </div>
+           
+        <div className="price-quantity"> <p>{item.price * item.quantity}kr</p> </div>
         </div>
                 ))
             )}

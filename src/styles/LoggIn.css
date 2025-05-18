@@ -49,17 +49,6 @@ main {
     font-size: 14px;
   }
   
-  .success {
-    color: greenyellow;
-  }
-  
-  
-  .input-success {
-    border: 2px solid green;
-    background-color: #e5ffe5;
-    color: black;
-  }
-  
 
   .admin {
     color: rgb(255, 255, 255);

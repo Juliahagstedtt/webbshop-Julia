@@ -41,7 +41,7 @@ const [isLoggedInState, setIsLoggedIn] = useState(localStorage.getItem('isLogged
       useEffect(() => {
         // Kontrollera om användaren är inloggad
         if (!localStorage.getItem("isLoggedIn")) {
-          navigate("/loggIn"); // navigera till loginsidan
+  setIsLoggedIn(false);
           return;
         }
 
@@ -221,11 +221,11 @@ const [isLoggedInState, setIsLoggedIn] = useState(localStorage.getItem('isLogged
             </select>
         </div>
         
-        <div className="logg-admin-section">
+        {/* <div className="logg-admin-section">
         <button 
         className="loggout-button" 
         onClick={handleLogout}>Logga ut</button>
-        </div>
+        </div> */}
 
         {/* Lista med produkter */}
         <div className="existing-p-list">
@@ -235,6 +235,8 @@ const [isLoggedInState, setIsLoggedIn] = useState(localStorage.getItem('isLogged
               {editId === product.id ? (
                 // Vid redigering visas inputfält
                 <>
+    <div className="edit-inputs">
+
                   <input className="admin-input"
                   name="name"  
                   value={editValues.name} 
@@ -288,6 +290,7 @@ const [isLoggedInState, setIsLoggedIn] = useState(localStorage.getItem('isLogged
 
 
                   <button className="add-button" onClick={() => handleSave(product.id)}>Spara</button>
+            </div>
                 </>
               ) : (
                 <>

@@ -16,7 +16,7 @@ function Footer() {
         window.addEventListener('storage', handleStorageChange);
         return() => window.removeEventListener('storage', handleStorageChange);
 
-    }, []);
+    }, [])
 
     return(
         <>

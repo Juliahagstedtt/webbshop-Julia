@@ -65,7 +65,7 @@ main {
   padding: 0 20px;
 }
 
-input {
+input, select {
     background-color: white;
     color: black;
     padding: 7px;
@@ -73,10 +73,3 @@ input {
     border-radius: 5px;
 }
 
-select {
-    background-color: white;
-    color: black;
-    padding: 7px;
-    margin-top: 5px;
-    border-radius: 5px;
-}
