@@ -76,13 +76,29 @@
     text-align: center;
 }
 
+.back-button {
+    background-color: #FF3499;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 9px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: 15px;
+}
+
+.back {
+    margin-bottom: 50px;
+    margin-top: -130px;
+}
+
 @media (max-width: 320px) {
  .cart-section {
         padding: 19px 10px;
         margin-bottom: 205px;
         width: 310px;
     }
-
-
-
+.product.button {
+font-size: 16px;}
 }

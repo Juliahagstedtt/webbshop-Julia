@@ -22,6 +22,7 @@ function Cart() {
 
     return(
         <>
+
         {/* Påbörjad, To Do!! */}
         <div className='cart-section'>
             {cart.length === 0 ? (
@@ -54,6 +55,12 @@ function Cart() {
                 console.log("Beställning har skickats!") }}
                 >Beställ</button>
 
+        </div>
+        <div className="back">
+        <Link to={"/Products"}>
+            <button className="back-button">Tillbaka
+            </button>
+        </Link> 
         </div>
         </>
     );
