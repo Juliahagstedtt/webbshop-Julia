@@ -98,12 +98,18 @@ return (
         />
         {errors.name && <p className="error">{errors.name}</p>}
 
-        <input
-        name="category"
-        placeholder="Kategori"
-        value={formData.category}
-        onChange={handleChange}
-      />
+        <label htmlFor="category">Kategori</label>
+          <select
+            id="category"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+            required
+          >
+            <option value="">Välj kategori</option>
+            <option value="Dockor">Dockor</option>
+            <option value="Kläder & Accessoarer">Kläder & Accessoarer</option>
+            <option value="Barbie Livsstil">Barbie Livsstil</option>
+          </select>
       {errors.category && <p className="error">{errors.category}</p>}
 
         <input

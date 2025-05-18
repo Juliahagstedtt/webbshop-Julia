@@ -16,19 +16,18 @@ import Order from './pages/Order';
 function App() {
   return (
     <>
-      <div>
+      <div className="page-wrapper">
         <Header />
         <main>
-        <Routes>
-          <Route path='/' element={<Home />} />
-          <Route path='/Cart' element={<Cart />} />
-          <Route path='/Products' element={<Products />} />
-          <Route path="/loggIn" element={<LoggIn />} />
-          <Route path='/admin' element={<Admin />} />
-          <Route path='/addnewproduct' element={<AddNewProduct />} />
-          <Route path='/order' element={<Order />} />
-        </Routes>
-        
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/Cart' element={<Cart />} />
+            <Route path='/Products' element={<Products />} />
+            <Route path="/loggIn" element={<LoggIn />} />
+            <Route path='/admin' element={<Admin />} />
+            <Route path='/addnewproduct' element={<AddNewProduct />} />
+            <Route path='/order' element={<Order />} />
+          </Routes>
         </main>
         <Footer />
       </div>

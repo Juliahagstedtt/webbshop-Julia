@@ -1,4 +1,5 @@
 import { useProductStore } from '../data/ProductStore';  
+import { useNavigate } from 'react-router-dom';
 import { Link } from "react-router-dom";
 import '../styles/Admin.css'
 import TrashCan from '../assets/TrashCan.png';
@@ -7,16 +8,21 @@ import { useState, useEffect } from "react";
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from "../config/firebase";
 import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
+// import { object } from 'joi';
+import Joi from 'joi';
 // import useProductStore from "../data/ProductStore"; 
 
 // lOGGA UT? Local storage?
 // TO DO! Validera ändra 
 
 function Admin() {
-    // Lista över produkter
+  const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+  const navigate = useNavigate();
+
+ // Lista över produkter
 
   const [products, setProducts] = useState([]);
-  const [error, setError] = useState("");
+  const [error, setError] = useState({});
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOption, setSortOption] = useState('');
     
@@ -32,27 +38,30 @@ function Admin() {
     });
   
     // Hämtar alla produkter från Firestore när sidan laddas
-    useEffect(() => {
-      const fetchProducts = async () => {
-        const querySnapshot = await getDocs(collection(db, "products")); // hämtar dokument från "products"
-        
-        // Skapar en lista med produkter som inte är borttagna
-        const productList = querySnapshot.docs
-          .map((doc) => ({ id: doc.id, ...doc.data() }))
-          .filter((product) => !product.isDeleted); // filtrerar/tar bort  "borttagna" produkter
-  
-        setProducts(productList);
-        setOriginalProducts(productList);
-      };
-  
-      fetchProducts(); 
-    }, []);
+      useEffect(() => {
+        // Kontrollera om användaren är inloggad
+        if (!localStorage.getItem("isLoggedIn")) {
+          navigate("/loggIn"); // navigera till loginsidan
+          return;
+        }
+
+        const fetchProducts = async () => {
+          const querySnapshot = await getDocs(collection(db, "products"));
+          const productList = querySnapshot.docs
+            .map((doc) => ({ id: doc.id, ...doc.data() }))
+            .filter((product) => !product.isDeleted);
+          setProducts(productList);
+          setOriginalProducts(productList);
+        };
+
+        fetchProducts();
+      }, [navigate]);
   
     // När man klickar på papperskorg, markeras produkten som borttagen
     const handleRemove = async (id) => {
       try {
         const docRef = doc(db, "products", id); 
-        await updateDoc(docRef, { isDeleted: true }); 
+        await deleteDoc(docRef);
         // dubbelkolla så att de försvinner på firestore
   
         // Uppdaterar listan och tar bort produkten från vyn
@@ -84,17 +93,25 @@ function Admin() {
       [name]: value 
       }));
     }
-  
+
+    
     // Sparar ändringar till firestore och uppdaterar listan
     const handleSave = async (id) => {
         const { name, description, price, imageUrl, category } = editValues;
 
-        if (!name || !description || !price || !imageUrl || !category) {
-          setError("Alla fält måste vara ifyllda innan du kan spara.");
-          return; 
+    const newErrors = {};
+        if (!name) newErrors.name = "Namn måste fyllas i.";
+        if (!description || description.length < 5) newErrors.description = "Beskrivning måste vara minst 5 tecken.";
+        if (!price || Number(price) <= 0) newErrors.price = "Pris måste vara ett heltal.";
+        if (!imageUrl || !imageUrl.startsWith("http")) newErrors.imageUrl = "Ogiltig länk, måste inehålla http.";
+        if (!category) newErrors.category = "Kategori saknas.";
+        if (Object.keys(newErrors).length > 0) {
+          setError(newErrors);
+          return;
         }
 
-        setError("");
+    setError({});
+
       const docRef = doc(db, "products", id); 
 
       const updateProduct = {
@@ -123,18 +140,17 @@ function Admin() {
       setEditId(null); // avslutar redigeringsläge
     };
   
-    // Återställer produkterna till original (t.ex. om man ångrat sig)
-    const handleReset = async () => {
-      const querySnapshot = await getDocs(collection(db, "products"));
-      const productList = querySnapshot.docs
-        .map((doc) => ({ id: doc.id, ...doc.data() }))
-        .filter((product) => !product.isDeleted);
-  
-      setProducts(productList);
-      setOriginalProducts(productList);
-      setEditId(null); // avslutar redigering
+
+
+    const handleLogout = () => {
+      localStorage.setItem('isLoggedIn', 'false');
+      // setIsLoggedIn(false);
+      navigate('/loggIn');
     };
-  console.log("products i Admin:", products);
+    if (!isLoggedIn) {
+      navigate('/loggIn');
+      return null;
+    }
 
 
       const filteredAndSortedProducts = [...products]
@@ -193,60 +209,71 @@ function Admin() {
                 <option value="price-desc">Pris högt till lågt</option>
             </select>
         </div>
-  
+        
+        <div className="logg-admin-section">
+        <button 
+        className="loggout-button" 
+        onClick={handleLogout}>Logga ut</button>
+        </div>
+
         {/* Lista med produkter */}
         <div className="existing-p-list">
-          {/* <button className="reset-button" onClick={handleReset}>Återställ Produkter</button>    */}
-          <Link to={"/loggin"}>
-            <button className="loggout-button">Logga ut</button>   
-          </Link>
   
           {filteredAndSortedProducts.map((product) => (
             <div key={product.id} className="product-item" >
               {editId === product.id ? (
                 // Vid redigering visas inputfält
                 <>
-                  <input 
+                  <input className="admin-input"
                   name="name"  
                   value={editValues.name} 
                   placeholder='Namn'
                   onChange={handleInputChange}/>
-      {error && <p className="error">{error}</p>}
+{error.name && <p className="error">{error.name}</p>}
 
 
-                  <input 
-                  name="category" 
-                  value={editValues.category} 
-                  placeholder='kategori'
-                  onChange={handleInputChange} />
-      {error && <p className="error">{error}</p>}
+                  <label className="admin-input"
+                  htmlFor="category">Kategori</label>
+                    <select
+                      id="category"
+                      value={editValues.category}
+                      onChange={handleInputChange}
+                      name="category"
+                    >
+                      <option value="">Välj kategori</option>
+                      <option value="Dockor">Dockor</option>
+                      <option value="Kläder & Accessoarer">Kläder & Accessoarer</option>
+                      <option value="Barbie Livsstil">Barbie Livsstil</option>
+                    </select>
+                {error.category && <p className="error">{error.category}</p>}
 
 
 
-                  <input 
+
+                  <input className="admin-input"
                   name="description"  
                   value={editValues.description} 
                   placeholder='beskrivning'
                   onChange={handleInputChange}/>
-      {error && <p className="error">{error}</p>}
+{error.description && <p className="error">{error.description}</p>}
 
 
-                  <input 
+                  <input className="admin-input"
                   name="price"  
                   type="number"
                   placeholder='pris'
                   value={editValues.price} 
                   onChange={handleInputChange} />
-  {error && <p className="error">{error}</p>}
+{error.price && <p className="error">{error.price}</p>}
 
-                  <input 
+                  <input className="admin-input"
                   type="text"
                   name="imageUrl"
                   placeholder='Bild_URL'
                   value={editValues.imageUrl} 
                   onChange={handleInputChange}
                 />
-      {error && <p className="error">{error}</p>}
+{error.imageUrl && <p className="error">{error.imageUrl}</p>}
 
 
                   <button className="add-button" onClick={() => handleSave(product.id)}>Spara</button>

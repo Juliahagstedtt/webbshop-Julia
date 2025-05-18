@@ -1,5 +1,5 @@
 import '../styles/LoggIn.css';
-import { useNavigate, Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Joi from 'joi';
 import { useState } from 'react';
 
@@ -34,62 +34,53 @@ function LoggIn() {
   });
 
   // Funktion för när användaren klickar på Logga in
-  const handleSubmit = (e) => {
-    e.preventDefault();
+const handleSubmit = (e) => {
+  e.preventDefault();
 
-    // Validerar lösenordet enligt Joi-schema
-     const { error: error } = schema.validate({ username, password }, { abortEarly: false });
+  // Nollställ fel
+  setUsernameError('');
+  setPasswordError('');
+  setUsernameValid(null);
+  setPasswordValid(null);
 
-    
-    const newFieldErrors = {
-      username: !username || username.length < 3 || username !== correctUsername,
-      password: !password || password.length < 3 || password !== correctPassword,
-    };
+  // Validering enligt Joi
+  const { error } = schema.validate({ username, password }, { abortEarly: false });
 
-    setFieldErrors(newFieldErrors);
+  if (error) {
+    error.details.forEach((detail) => {
+      if (detail.path.includes('username')) {
+        setUsernameError(detail.message);
+        setUsernameValid(false);
+      }
+      if (detail.path.includes('password')) {
+        setPasswordError(detail.message);
+        setPasswordValid(false);
+      }
+    });
+    return;
+  }
 
+  // Kontrollera korrekta inloggningsuppgifter
+  if (username !== correctUsername) {
+    setUsernameError('Fel användarnamn');
+    setUsernameValid(false);
+    return;
+  } else {
+    setUsernameValid(true);
+  }
 
-    setUsernameError('');
-    setPasswordError('');
-    setUsernameValid(null);
-    setPasswordValid(null);
+  if (password !== correctPassword) {
+    setPasswordError('Fel lösenord');
+    setPasswordValid(false);
+    return;
+  } else {
+    setPasswordValid(true);
+  }
 
-    // Om valideringen misslyckas är de för att lösenordet är för kort
-    if (error) {
-      error.details.forEach((detail) => {
-        if (detail.path.includes('username')) {
-          setUsernameError(detail.message);
-          setUsernameValid(false);
-        }
-        if (detail.path.includes('password')) {
-          setPasswordError(detail.message);
-          setPasswordValid(false);
-        }
-      });
-      return;
-    }
-
-if (username !== correctUsername) {
-      setUsernameError('Fel användarnamn');
-      setUsernameValid(false);
-    } else {
-      setUsernameError('');
-      setUsernameValid(true);
-    }
-
-    if (password !== correctPassword) {
-      setPasswordError('Fel lösenord');
-      setPasswordValid(false);
-    } else {
-      setPasswordError('');
-      setPasswordValid(true);
-    }
-
-    if (username === correctUsername && password === correctPassword) {
-      setFieldErrors({ username: false, password: false });
-      navigate('/admin');
- };
-}
+  // Allt är korrekt – logga in
+  localStorage.setItem('isLoggedIn', 'true');
+  navigate('/admin');
+};
 // Sista grej att fixa med validering för användarnamn
 
   return (
