@@ -71,7 +71,7 @@ const handleSubmit = async (e) => {
         // Spara produkten i Firestore
         await addDoc(collection(db, "products"), {
             ...formData,
-            price: Number(formData.price), // Se till att pris är nummer
+            price: Number(formData.price),
             isDeleted: false
         });
         navigate("/admin"); 

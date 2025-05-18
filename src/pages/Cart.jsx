@@ -22,15 +22,11 @@ function Cart() {
 
     return(
         <>
-
-        {/* Påbörjad, To Do!! */}
         <div className='cart-section'>
             {cart.length === 0 ? (
                 <p className='cart-text'>Din varukorg är tom</p>
             ) : (
                 cart.map((item) => (
-
-               
         
         <div className='cart-items' key={item.id}>
             <div className="cart-name">{item.name}</div>

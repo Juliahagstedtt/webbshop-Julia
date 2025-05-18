@@ -5,10 +5,10 @@ import { useState } from 'react';
 
 
 function LoggIn() {
-
   // State för att hålla reda på användarnamn och lösenord
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
+
   // State för att hantera felmeddelanden
   const [usernameError, setUsernameError] = useState('');
   const [passwordError, setPasswordError] = useState('');
@@ -19,7 +19,7 @@ function LoggIn() {
 
   const navigate = useNavigate();
 
-  // Rätt inloggnings uppgifter för inlogg (Inte klar än!)
+  // Rätt inloggnings uppgifter för inlogg
   const correctUsername = 'admin'
   const correctPassword = '1234';
 
@@ -101,7 +101,6 @@ function LoggIn() {
     localStorage.setItem('isLoggedIn', 'true');
     navigate('/admin');
   };
-// Sista grej att fixa med validering för användarnamn
 
   return (
     <section className="loggIn dark-theme">

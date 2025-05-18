@@ -8,18 +8,11 @@ import { useState, useEffect } from "react";
 import { collection, getDocs } from 'firebase/firestore';
 import { db } from "../config/firebase";
 import { doc, updateDoc, deleteDoc } from 'firebase/firestore';
-// import { object } from 'joi';
 import Joi from 'joi';
-// import useProductStore from "../data/ProductStore"; 
-
-// lOGGA UT? Local storage?
-// TO DO! Validera ändra 
 
 function Admin() {
 const [isLoggedInState, setIsLoggedIn] = useState(localStorage.getItem('isLoggedIn') === 'true');
   const navigate = useNavigate();
-
- // Lista över produkter
 
   const [products, setProducts] = useState([]);
   const [error, setError] = useState({});
@@ -28,11 +21,9 @@ const [isLoggedInState, setIsLoggedIn] = useState(localStorage.getItem('isLogged
     
   console.log("Typ av products:", typeof products);
   console.log("Innehåll i products:", products)
-    // Ursprunglig produktlista (används för återställning)
+
     const [originalProducts, setOriginalProducts] = useState([]);
-    // Håller reda på vilken produkt som redigeras just nu
     const [editId, setEditId] = useState(null);
-    // Innehåller de redigerade värdena för produktfält
     const [editValues, setEditValues] = useState({
       name: "", description: "", price: "", imageUrl: "", category: ""
     });
@@ -41,7 +32,7 @@ const [isLoggedInState, setIsLoggedIn] = useState(localStorage.getItem('isLogged
       useEffect(() => {
         // Kontrollera om användaren är inloggad
         if (!localStorage.getItem("isLoggedIn")) {
-  setIsLoggedIn(false);
+        setIsLoggedIn(false);
           return;
         }
 
@@ -57,14 +48,11 @@ const [isLoggedInState, setIsLoggedIn] = useState(localStorage.getItem('isLogged
         fetchProducts();
       }, [navigate]);
   
-    // När man klickar på papperskorg, markeras produkten som borttagen
     const handleRemove = async (id) => {
       try {
         const docRef = doc(db, "products", id); 
         await deleteDoc(docRef);
-        // dubbelkolla så att de försvinner på firestore
   
-        // Uppdaterar listan och tar bort produkten från vyn
         setProducts((prev) => prev.filter((product) => product.id !== id));
         console.log("Produkten har tagits bort.");
       } catch (error) {
@@ -72,7 +60,7 @@ const [isLoggedInState, setIsLoggedIn] = useState(localStorage.getItem('isLogged
       }
     };
   
-    // När man klickar på redigera-knappen så visas input-fält och spara kanpp
+    // När man klickar på redigera-knappen så visas input-fält och spara knapp
     const handleEditClick = (product) => {
       setEditId(product.id); // visar vilken produkt som redigeras
       setEditValues({ 
@@ -95,7 +83,7 @@ const [isLoggedInState, setIsLoggedIn] = useState(localStorage.getItem('isLogged
     }
 
     
-    // Sparar ändringar till firestore och uppdaterar listan
+    // Sparar ändringar till firestore och uppdatera listan
     const handleSave = async (id) => {
         const { name, description, price, imageUrl, category } = editValues;
 
@@ -186,18 +174,15 @@ const [isLoggedInState, setIsLoggedIn] = useState(localStorage.getItem('isLogged
 
     return (
       <div>
-        
-        {/* Knapp till admin-sidan */}
-        <Link to={"/admin"}>
-          <button className="admin-button">Ändra Produkt</button>
-        </Link>
+          <Link to={"/admin"}>
+            <button className="admin-button">Ändra Produkt</button>
+         </Link>
   
-        {/* Knapp till lägga till en ny produkt sidan*/}
-        <Link to={"/addnewproduct"}>
-          <button className="admin-button">Lägg till Produkt</button>
-        </Link>
+           <Link to={"/addnewproduct"}>
+            <button className="admin-button">Lägg till Produkt</button>
+          </Link>
 
-        <div className="admin-filters">
+          <div className="admin-filters">
             {/* Sökfält för produkter*/}
             <input 
                 type="search" 
@@ -221,11 +206,12 @@ const [isLoggedInState, setIsLoggedIn] = useState(localStorage.getItem('isLogged
             </select>
         </div>
         
-        {/* <div className="logg-admin-section">
-        <button 
-        className="loggout-button" 
-        onClick={handleLogout}>Logga ut</button>
-        </div> */}
+        {/* Kommenterad logga ut knapp */}
+            {/* <div className="logg-admin-section">
+            <button 
+            className="loggout-button" 
+            onClick={handleLogout}>Logga ut</button>
+            </div> */}
 
         {/* Lista med produkter */}
         <div className="existing-p-list">
@@ -235,18 +221,14 @@ const [isLoggedInState, setIsLoggedIn] = useState(localStorage.getItem('isLogged
               {editId === product.id ? (
                 // Vid redigering visas inputfält
                 <>
-    <div className="edit-inputs">
-
+        <div className="edit-inputs">
                   <input className="admin-input"
                   name="name"  
                   value={editValues.name} 
                   placeholder='Namn'
                   onChange={handleInputChange}/>
-{error.name && <p className="error">{error.name}</p>}
+                {error.name && <p className="error">{error.name}</p>}
 
-
-                  {/* <label className="admin-input"
-                  htmlFor="category">Kategori</label> */}
                     <select className="select-adminpage"
                       id="category"
                       value={editValues.category}
@@ -260,15 +242,12 @@ const [isLoggedInState, setIsLoggedIn] = useState(localStorage.getItem('isLogged
                     </select>
                 {error.category && <p className="error">{error.category}</p>}
 
-
-
-
                   <input className="admin-input"
                   name="description"  
                   value={editValues.description} 
                   placeholder='beskrivning'
                   onChange={handleInputChange}/>
-{error.description && <p className="error">{error.description}</p>}
+              {error.description && <p className="error">{error.description}</p>}
 
 
                   <input className="admin-input"
@@ -277,7 +256,7 @@ const [isLoggedInState, setIsLoggedIn] = useState(localStorage.getItem('isLogged
                   placeholder='pris'
                   value={editValues.price} 
                   onChange={handleInputChange} />
-{error.price && <p className="error">{error.price}</p>}
+              {error.price && <p className="error">{error.price}</p>}
 
                   <input className="admin-input"
                   type="text"
@@ -286,7 +265,7 @@ const [isLoggedInState, setIsLoggedIn] = useState(localStorage.getItem('isLogged
                   value={editValues.imageUrl} 
                   onChange={handleInputChange}
                 />
-{error.imageUrl && <p className="error">{error.imageUrl}</p>}
+              {error.imageUrl && <p className="error">{error.imageUrl}</p>}
 
 
                   <button className="add-button" onClick={() => handleSave(product.id)}>Spara</button>

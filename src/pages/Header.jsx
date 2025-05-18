@@ -18,9 +18,7 @@ const cartCount = (cartItems || []).reduce((acc, item) => acc + item.quantity, 0
                      <img src={logo} alt="logo" className="logo" />
                 </button>
                 </Link>
-
-            {/* <input type="serch" placeholder="sök" className='serch'></input> */}
-            
+                
             <div className='shop-cart'>
                 <Link to="/cart">
                 <button className='cart'>

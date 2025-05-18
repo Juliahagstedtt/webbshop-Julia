@@ -18,14 +18,12 @@
 
 .products-section {
     background-color: #131313f4;
-    /* margin-bottom: 300px; */
 }
 
 .products {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 1rem;
-    /* padding: 1rem; */
     margin-bottom: 230px;
 }
 
@@ -51,7 +49,6 @@
 .shop-icon {
     border: none;
     background: none;
-    /* position: absolute; */
     background: background-color 0.3s ease;
     cursor: pointer;
     color: #FF3499;

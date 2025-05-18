@@ -4,7 +4,6 @@ import { db } from "../config/firebase";
 import { Link } from 'react-router-dom';
 import '../styles/Products.css'
 import shopIcon from '../assets/shopIcon.svg';
-// import useProductStore from "../data/ProductStore"; 
 import { useStore } from 'zustand';
 import { useCartStore } from '../data/cartStore';
 
@@ -18,17 +17,11 @@ function Products() {
     const totalItems = useCartStore((state) =>
             state.items.reduce((sum, item) => sum + item.quantity, 0)
         );
-const addToCart = useCartStore((state) => state.addToCart);
+    const addToCart = useCartStore((state) => state.addToCart);
 
-    
-    // useEffect körs automatiskt EN gång när sidan laddas
-    // Här används den för att hämta produktdata från Firestore
     useEffect(() => {
-//Asynkron funktion, väntar på att hämta data från internet.
+        //Asynkron funktion, väntar på att hämta data från internet.
         async function fetchData() {
-// Firebase hämtar ALLA dokument från samlingen som heter "products". Alla produkter som har sparats i firestore
-            
-
             const querySnapshot = await getDocs(collection(db, "products"));
 
             const productsArray = querySnapshot.docs.map(doc => ({ 

@@ -13,16 +13,7 @@
     background-color: #FF3499;
 }
 
-/* .existing-p-list {
-    background-color: #ffffff;
-    color: black;
-    margin: 0 auto;   
-    max-width: 400px;    
-    height: 400px;    
-    text-align: center;        
-    padding: 20px;
-    border-radius: 5px;
-} */
+ 
 .product-name {
     color: #FF3499;
 
@@ -55,6 +46,7 @@
 .trashcan, .edit {
     background: none;
     border: none;
+    border-radius: 50%;
     width: 35px;
     height: 35px;
 }
