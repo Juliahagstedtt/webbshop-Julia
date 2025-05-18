@@ -16,7 +16,9 @@ function Admin() {
     // Lista över produkter
 
   const [products, setProducts] = useState([]);
-
+  const [error, setError] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortOption, setSortOption] = useState('');
     
   console.log("Typ av products:", typeof products);
   console.log("Innehåll i products:", products)
@@ -85,23 +87,24 @@ function Admin() {
   
     // Sparar ändringar till firestore och uppdaterar listan
     const handleSave = async (id) => {
+        const { name, description, price, imageUrl, category } = editValues;
+
+        if (!name || !description || !price || !imageUrl || !category) {
+          setError("Alla fält måste vara ifyllda innan du kan spara.");
+          return; 
+        }
+
+        setError("");
       const docRef = doc(db, "products", id); 
-  
-      // Uppdaterar värden i firestore
+
       const updateProduct = {
-        name: editValues.name,
-        description: editValues.description,
-        price: Number(editValues.price),
-        imageUrl: editValues.imageUrl || "",
-        category: editValues.category
+        name,
+        description,
+        price: Number(price),
+        imageUrl,
+        category,
       };
 
-      const newProduct = {
-        name: nameInput,            
-        price: Number(priceInput), 
-        imageUrl: imageUrlInput,   
-        description: descriptionInput || "",
-      };
 
       await updateDoc(docRef, updateProduct);
   
@@ -133,8 +136,30 @@ function Admin() {
     };
   console.log("products i Admin:", products);
 
+
+      const filteredAndSortedProducts = [...products]
+        .filter(product => 
+        (product.name?.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        product.category?.toLowerCase().includes(searchTerm.toLowerCase()))
+        )
+        .sort((a, b) => {
+            switch (sortOption) {
+                case "name-asc":
+                    return (a?.name || '').localeCompare(b?.name || '');
+                case "name-desc":
+                    return (b?.name || '').localeCompare(a?.name || '');                
+                case "price-asc":
+                    return a.price - b.price;
+                case "price-desc":
+                    return b.price - a.price;
+                default:
+                    return 0;
+            }
+        });
+
     return (
       <div>
+        
         {/* Knapp till admin-sidan */}
         <Link to={"/admin"}>
           <button className="admin-button">Ändra Produkt</button>
@@ -144,6 +169,30 @@ function Admin() {
         <Link to={"/addnewproduct"}>
           <button className="admin-button">Lägg till Produkt</button>
         </Link>
+
+        <div className="admin-filters">
+            {/* Sökfält för produkter*/}
+            <input 
+                type="search" 
+                placeholder="Sök efter produkt..." 
+                className="search"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
+
+            {/* Dropdown för att sortera produkter*/}
+            <select
+                className="dropdown"
+                value={sortOption}
+                onChange={(e) => setSortOption(e.target.value)}
+            >
+                <option value="">Sortera</option>
+                <option value="name-asc">Namn A-Ö </option>
+                <option value="name-desc">Namn Ö-A</option>
+                <option value="price-asc">Pris lågt till högt</option>
+                <option value="price-desc">Pris högt till lågt</option>
+            </select>
+        </div>
   
         {/* Lista med produkter */}
         <div className="existing-p-list">
@@ -152,7 +201,7 @@ function Admin() {
             <button className="loggout-button">Logga ut</button>   
           </Link>
   
-          {products.map((product) => (
+          {filteredAndSortedProducts.map((product) => (
             <div key={product.id} className="product-item" >
               {editId === product.id ? (
                 // Vid redigering visas inputfält
@@ -162,12 +211,16 @@ function Admin() {
                   value={editValues.name} 
                   placeholder='Namn'
                   onChange={handleInputChange}/>
+      {error && <p className="error">{error}</p>}
+
 
                   <input 
                   name="category" 
                   value={editValues.category} 
                   placeholder='kategori'
                   onChange={handleInputChange} />
+      {error && <p className="error">{error}</p>}
+
 
 
                   <input 
@@ -175,6 +228,8 @@ function Admin() {
                   value={editValues.description} 
                   placeholder='beskrivning'
                   onChange={handleInputChange}/>
+      {error && <p className="error">{error}</p>}
+
 
                   <input 
                   name="price"  
@@ -182,6 +237,7 @@ function Admin() {
                   placeholder='pris'
                   value={editValues.price} 
                   onChange={handleInputChange} />
+  {error && <p className="error">{error}</p>}
 
                   <input 
                   type="text"
@@ -190,6 +246,8 @@ function Admin() {
                   value={editValues.imageUrl} 
                   onChange={handleInputChange}
                 />
+      {error && <p className="error">{error}</p>}
+
 
                   <button className="add-button" onClick={() => handleSave(product.id)}>Spara</button>
                 </>

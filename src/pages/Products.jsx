@@ -78,7 +78,7 @@ const addToCart = useCartStore((state) => state.addToCart);
     return (
         <>
         <div className="products-section">
-            {/* Sökfält för produkter, (To Do! Inte gjord än)*/}
+            {/* Sökfält för produkter*/}
             <input 
                 type="search" 
                 placeholder="Sök efter produkt..." 
@@ -87,7 +87,7 @@ const addToCart = useCartStore((state) => state.addToCart);
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
 
-            {/* Dropdown för att sortera produkter (To do! Inte gjord än) */}
+            {/* Dropdown för att sortera produkter*/}
             <select
                 className="dropdown"
                 value={sortOption}
