@@ -1,7 +1,7 @@
 import '../styles/LoggIn.css';
 import { useNavigate } from 'react-router-dom';
 import Joi from 'joi';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 
 function LoggIn() {
@@ -62,6 +62,12 @@ function LoggIn() {
     }
   }
 };
+
+useEffect(() => {
+  if (localStorage.getItem('isLoggedIn') === 'true') {
+    navigate('/admin');
+  }
+}, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();

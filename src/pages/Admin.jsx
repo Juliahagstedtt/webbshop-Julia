@@ -18,7 +18,8 @@ const [isLoggedInState, setIsLoggedIn] = useState(localStorage.getItem('isLogged
   const [error, setError] = useState({});
   const [searchTerm, setSearchTerm] = useState('');
   const [sortOption, setSortOption] = useState('');
-    
+  const [loading, setLoading] = useState(true);
+  
   console.log("Typ av products:", typeof products);
   console.log("Innehåll i products:", products)
 
@@ -29,24 +30,26 @@ const [isLoggedInState, setIsLoggedIn] = useState(localStorage.getItem('isLogged
     });
   
     // Hämtar alla produkter från Firestore när sidan laddas
-      useEffect(() => {
-        // Kontrollera om användaren är inloggad
-        if (!localStorage.getItem("isLoggedIn")) {
-        setIsLoggedIn(false);
-          return;
-        }
+    useEffect(() => {
+      const checkLogin = localStorage.getItem("isLoggedIn") === "true";
+      setIsLoggedIn(checkLogin);
 
-        const fetchProducts = async () => {
-          const querySnapshot = await getDocs(collection(db, "products"));
-          const productList = querySnapshot.docs
-            .map((doc) => ({ id: doc.id, ...doc.data() }))
-            .filter((product) => !product.isDeleted);
-          setProducts(productList);
-          setOriginalProducts(productList);
-        };
+      if (!checkLogin) {
+        navigate('/loggIn');
+      }
 
-        fetchProducts();
-      }, [navigate]);
+      const fetchProducts = async () => {
+        const querySnapshot = await getDocs(collection(db, "products"));
+        const productList = querySnapshot.docs
+          .map((doc) => ({ id: doc.id, ...doc.data() }))
+          .filter((product) => !product.isDeleted);
+        setProducts(productList);
+        setOriginalProducts(productList);
+      };
+
+      fetchProducts().finally(() => setLoading(false)); // markera klar
+    }, [navigate]);
+
   
     const handleRemove = async (id) => {
       try {
@@ -150,6 +153,8 @@ const [isLoggedInState, setIsLoggedIn] = useState(localStorage.getItem('isLogged
       navigate('/loggIn');
       return null;
     }
+    if (loading) return null;
+
 
 
       const filteredAndSortedProducts = [...products]
@@ -207,11 +212,11 @@ const [isLoggedInState, setIsLoggedIn] = useState(localStorage.getItem('isLogged
         </div>
         
         {/* Kommenterad logga ut knapp */}
-            {/* <div className="logg-admin-section">
+            <div className="logg-admin-section">
             <button 
             className="loggout-button" 
             onClick={handleLogout}>Logga ut</button>
-            </div> */}
+            </div>
 
         {/* Lista med produkter */}
         <div className="existing-p-list">

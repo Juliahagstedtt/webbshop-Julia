@@ -1,7 +1,10 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useCartStore } from "../data/cartStore";
 
 function PrivateRoute({ currentUser }) {
+  if (currentUser === null) {
+    return <div>Loading...</div>; 
+  }
+
   return currentUser ? <Outlet /> : <Navigate to="/loggIn" />;
 }
 
