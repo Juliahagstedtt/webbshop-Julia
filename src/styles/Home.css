@@ -4,9 +4,9 @@
 }
 
 .home-container {
-  max-width: 900px;
-  margin: 50px auto;
-  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+  /* padding: 20px; */
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -14,10 +14,12 @@
   background-color: #373838c0;
   border-radius: 15px;
   box-shadow: 0 4px 10px #FF3499;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .barbi-img1 {
-  width: 400px;
+  width: 300px;
   border-radius: 15px;
   box-shadow: 0 6px 12px #FF3499;
   margin: 0 auto;
@@ -57,22 +59,26 @@
 }
 
 @media (max-width: 320px) {
+ .home-container {
+        max-width: 300px;
+        padding: 10px; 
+    }
+
     .barbi-img1 {
-        max-width: 90%;
-        margin: 20px auto;
+        max-width: 100%;  
     }
 
     .home-info {
-        width: 90%;
-        padding: 20px;
-        font-size: 16px;
+        padding: 15px; 
+        font-size: 14px; 
     }
 
     .home-text {
-        font-size: 23px;
+        font-size: 20px; 
     }
 
     .product-button {
-        font-size: 16px;
+        font-size: 14px; 
+        padding: 8px 12px; 
     }
 }
