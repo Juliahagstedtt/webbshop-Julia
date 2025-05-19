@@ -107,6 +107,10 @@
     margin-top: 15px;
 }
 
+.back-button:hover, .order:hover {
+  background-color: rgb(255, 165, 216);
+}
+
 .back {
     margin-bottom: 50px;
     margin-top: -130px;
