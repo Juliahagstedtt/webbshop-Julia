@@ -35,7 +35,7 @@ function App() {
             <Route path='/' element={<Home />} />
             <Route path='/Cart' element={<Cart />} />
             <Route path='/Products' element={<Products />} />
-            <Route path="/loggIn" element={<LoggIn />} />
+            <Route path="/loggIn" element={<LoggIn setCurrentUser={setCurrentUser} />} />
 
 
         <Route element={<PrivateRoute currentUser={currentUser} />}>

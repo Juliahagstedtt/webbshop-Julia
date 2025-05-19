@@ -2,7 +2,12 @@ import { Navigate, Outlet } from 'react-router-dom';
 
 function PrivateRoute({ currentUser }) {
   if (currentUser === null) {
-    return <div>Loading...</div>; 
+    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+    if (isLoggedIn) {
+      return <Outlet />;
+    } else {
+      return <Navigate to="/loggIn" />;
+    }
   }
 
   return currentUser ? <Outlet /> : <Navigate to="/loggIn" />;

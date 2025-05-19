@@ -4,7 +4,7 @@ import Joi from 'joi';
 import { useState, useEffect } from 'react';
 
 
-function LoggIn() {
+function LoggIn({ setCurrentUser }) {
   // State för att hålla reda på användarnamn och lösenord
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
@@ -105,6 +105,7 @@ useEffect(() => {
     }
 
     localStorage.setItem('isLoggedIn', 'true');
+    setCurrentUser({ username: username });
     navigate('/admin');
   };
 
