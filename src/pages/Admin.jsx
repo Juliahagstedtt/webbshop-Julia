@@ -44,14 +44,20 @@ function Admin() {
     loadProducts();
   }, [navigate]);
 
-  const handleRemove = async (id) => {
-    try {
-      await deleteProduct(id);
-      setProducts(prev => prev.filter(product => product.id !== id));
-    } catch (err) {
-      console.error("Fel vid borttagning:", err);
-    }
-  };
+const handleRemove = async (id) => {
+  try {
+    const { error } = await supabase
+      .from("products")
+      .update({ isDeleted: true })
+      .eq("id", id);
+
+    if (error) throw error;
+
+    setProducts(prev => prev.filter(product => product.id !== id));
+  } catch (err) {
+    console.error("Fel vid borttagning:", err);
+  }
+};
 
   const handleEditClick = (product) => {
     setEditId(product.id);
