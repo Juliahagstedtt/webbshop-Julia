@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { collection, addDoc } from "firebase/firestore";
 import '../styles/AddNewProduct.css'
-import { db } from "../config/firebase";
+import {  } from "../data/products";
+import { supabase } from "../config/superbase";
 import Joi from "joi";
 
 // validering för formulär i lägg till ny produkt
@@ -52,32 +52,38 @@ const handleChange = (e) => {
   }));
 };
 
-
 const handleSubmit = async (e) => {
   e.preventDefault();
 
-    const validation = schema.validate(formData, { abortEarly: false });
-    if (validation.error) {
-        // Vid fel, samla alla fel och visa dem
-        const newErrors = {};
-        validation.error.details.forEach(err => {
-            newErrors[err.path[0]] = err.message;
-        });
-        setErrors(newErrors);
-        return;
-    }
+  const validation = schema.validate(formData, { abortEarly: false });
+  if (validation.error) {
+      const newErrors = {};
+      validation.error.details.forEach(err => {
+          newErrors[err.path[0]] = err.message;
+      });
+      setErrors(newErrors);
+      return;
+  }
 
-    try {
-        // Spara produkten i Firestore
-        await addDoc(collection(db, "products"), {
-            ...formData,
-            price: Number(formData.price),
-            isDeleted: false
-        });
-        navigate("/admin"); 
-    } catch (err) {
-        console.error("Fel vid tillägg", err);
-    }
+  try {
+      const { data, error } = await supabase
+          .from("products")
+          .insert([{
+              ...formData,
+              price: Number(formData.price),
+              isDeleted: false
+          }]);
+
+      if (error) {
+          console.error("Fel vid tillägg:", error);
+          return;
+      }
+
+      console.log("Nya produkten har lagts till!", data);
+      navigate("/admin");
+  } catch (err) {
+      console.error("Fel vid tillägg:", err);
+  }
 };
 
 return (

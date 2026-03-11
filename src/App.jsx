@@ -10,7 +10,7 @@ import Footer from './pages/Footer';
 import LoggIn from './pages/LoggIn';
 import Admin from './pages/Admin';
 import AddNewProduct from './pages/AddNewProduct';
-import { fetchProducts } from './config/firebase';
+import { fetchProducts } from "./data/products.js";
 import ProductList from "./pages/ProductList";
 import Order from './pages/Order';
 

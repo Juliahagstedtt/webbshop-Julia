@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { deleteProductFromFirestore } from "../config/firebase";
+import { deleteProduct } from "../data/products";
 
 export const useProductStore = create((set) => ({
   products: [],
@@ -7,7 +7,7 @@ export const useProductStore = create((set) => ({
 
   removeProduct: async (id) => {
     try {
-      await deleteProductFromFirestore(id);
+      await deleteProduct(id); 
       set((state) => ({
         products: state.products.filter(product => product.id !== id)
       }));
